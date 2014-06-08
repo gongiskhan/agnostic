@@ -1,0 +1,8 @@
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+             http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <!--Do not use this file. Its is only here because we are on servlet 2.5 and when dispatcher servlet is in web.xml it expects an xml configuration file. This file will be removed when moving to tomcat 7 which supports servlet 3.0-->
+
+</beans:beans>
