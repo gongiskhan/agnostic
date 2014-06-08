@@ -1,0 +1,26 @@
+function heredoc(){
+/*
+<div class="alert alert-info">
+    <strong>Supported placeholders:</strong><br/>
+    <ul>
+        <li>$VIEW - The contents of a view as defined in the Views area.</li>
+        <li>$TITLE - The title of the View.</li>
+        <li>$MENU - The menu based on View Groups as top level and Views as sub-levels.</li>
+        <li>$TEMPLATE_RESOURCES - All Template Resources as defined below.</li>
+        <li>$STYLE_COMPONENT_RESOURCES - Component Resources defined as STYLE.</li>
+        <li>$SCRIPT_COMPONENT_RESOURCES - Component Resources defined as SCRIPT.</li>
+    </ul>
+</div>
+<div class="fieldContainer">
+    <label>Template</label>
+    <!--<textarea rows="30" class="input-xxlarge" id="content" style="width:90%; height:90%;"></textarea>-->
+    <div id="content"></div>
+</div>
+<br/><br/>
+<fieldset id="resourcesMultiSelect"></fieldset>
+<br/><br/><br/>
+<a href="#" class="btn btn-large btn-primary saveButton"><i class="icon-hdd"></i> Save</a><br/>
+<script type="text/javascript" src="js/PageLoader.js"></script>
+*/
+};
+var content = ('\n'+heredoc.toString().match(/\/\*\s*([\s\S]*?)\s*\*\//m)[1]+'\n');

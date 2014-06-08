@@ -1,0 +1,11 @@
+function heredoc(){/*
+<a href="component.html" class="btn btn-block btn-primary"><i class="icon-plus-sign"></i> New</a>
+<br/>
+<input type="text" class="input-xlarge" id="searchContent"/>
+<a href="#" class="btn btn-primary" id="searchContentButton" style="vertical-align: top;"><i class="icon-search"></i> Search Contents</a>
+<div class="well" id="components"></div>
+<div id="modalContainer"></div>
+<script type="text/javascript" src="js/PageLoader.js"></script>
+*/
+};
+var content = ('\n'+heredoc.toString().match(/\/\*\s*([\s\S]*?)\s*\*\//m)[1]+'\n');

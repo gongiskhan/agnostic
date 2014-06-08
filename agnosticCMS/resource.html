@@ -1,0 +1,27 @@
+function heredoc(){
+/*
+<form id="tab">
+    <label>Name</label>
+    <input type="text" class="input-xlarge" id="name"/>
+    <label>Type</label>
+    <select class="select" id="type">
+        <option>JavaScript</option>
+        <option>CSS</option>
+    </select>
+    </br>
+    <label>Service</label>
+    <select id="service" class="dropdown"></select>
+    <br/>
+    <fieldset class="fieldset">
+        <legend class="legend">Code <span class="badge info" title="">i</span></legend>
+        <!--<textarea rows="30" class="input-xxlarge" id="content" style="width:99%; height:70%;"></textarea>-->
+        <div id="content"></div>
+    </fieldset>
+    <br/><br/>
+    <a href="#" class="btn btn-large btn-primary saveButton"><i class="icon-hdd"></i> Save</a><br/>
+</form>
+<div id="modalContainer"></div>
+<script type="text/javascript" src="js/PageLoader.js"></script>
+*/
+};
+var content = ('\n'+heredoc.toString().match(/\/\*\s*([\s\S]*?)\s*\*\//m)[1]+'\n');
