@@ -93,7 +93,7 @@ $(function(){
             });
         });
     }else{
-        AGNOSTIC.Ajax.get('roles',undefined, function(roles){
+        AGNOSTIC.Ajax.get('role?id=1',null, function(roles){
             AGNOSTIC.Ajax.get('availableServices',undefined, function(services){
                 afterLoad(null, roles, services);
             });
@@ -104,6 +104,7 @@ $(function(){
         e.preventDefault();
 
         AGNOSTIC.Ajax.get('component',undefined, function(componentsFetched){
+
             addComponentsModal = AGNOSTIC.Modal.create({target:'#modalContainer', legend:'Add Components', formFields: [{
                 label:'Components',
                 name:'components',
@@ -150,13 +151,15 @@ $(function(){
         }
         return componentsSubComponentsIds;
     }
-    setTimeout(function(){
-        $('#name').val('paxaxinha');
-        save();
-    },1000);
+
+//    setTimeout(function(){
+//        $('#name').val('paxaxinha');
+//        save();
+//    },1000);
 
     function save(){
         console.log('Saving View.');
+
         var view = {
             id: AGNOSTIC.Util.getParam('id') ? AGNOSTIC.Util.getParam('id') : 0,
             name: $('#name').val(),
@@ -169,8 +172,10 @@ $(function(){
             componentsSubComponentsIds: getComponentsSubComponentsIds(),
             roles: rolesMultiSelect.getSelected()
         };
-        //AGNOSTIC.Ajax.post('view', view);
-        AGNOSTIC.Worker.formatPage(template, view);
+        console.debug(view);
+        AGNOSTIC.Ajax.post('view', view, function(){
+            AGNOSTIC.Worker.formatPage(template, view);
+        });
     }
     $('.saveButton').on('click', function(e){
         e.preventDefault();

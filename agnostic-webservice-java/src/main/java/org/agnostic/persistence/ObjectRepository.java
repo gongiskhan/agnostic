@@ -1,8 +1,9 @@
 package org.agnostic.persistence;
 
+import org.agnostic.error.ExceptionFactory;
+import org.agnostic.error.RestException;
 import org.agnostic.util.JSONUtil;
 import org.apache.commons.io.IOUtils;
-import org.h2.jdbc.JdbcSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +14,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,8 +25,10 @@ public class ObjectRepository {
     DataSource dataSource;
     @Autowired
     JSONUtil jsonUtil;
+    @Autowired
+    ExceptionFactory exceptionFactory;
 
-    public void create(String objectName, Object object) throws SQLException, IOException {
+    public Map create(String objectName, Map object) throws SQLException, IOException, RestException {
         Connection con = null;
         PreparedStatement ps = null;
         try{
@@ -36,7 +40,14 @@ public class ObjectRepository {
             ps = con.prepareStatement("insert into "+objectName+" (json) values (?);");
             ps.setClob(1, new StringReader(jsonUtil.toJSON(object)));
             ps.executeUpdate();
-        } finally{
+            Statement idS = con.createStatement();
+            ResultSet rs = idS.executeQuery("select IDENTITY();");
+            rs.next();
+            object.put("id",rs.getInt(1));
+            return object;
+        }catch(Exception ex){
+            throw exceptionFactory.createException(ex);
+        }finally{
             try {
                 ps.close();
                 con.close();
@@ -46,7 +57,7 @@ public class ObjectRepository {
         }
     }
 
-    public Map fetch(String objectName, int id) throws SQLException, IOException {
+    public Map fetch(String objectName, int id) throws SQLException, IOException, RestException {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -67,8 +78,8 @@ public class ObjectRepository {
                 value = (Map) jsonUtil.fromJSON(clobAsString, Map.class);
                 value.put("id",theId);
             }
-        }catch (JdbcSQLException ex){
-            value = null;
+        }catch(Exception ex){
+            throw exceptionFactory.createException(ex);
         } finally{
             try {
                 ps.close();
@@ -80,7 +91,7 @@ public class ObjectRepository {
         return value;
     }
 
-    public List<Map> fetchAll(String objectName) throws SQLException, IOException {
+    public List<Map> fetchAll(String objectName) throws SQLException, IOException, RestException {
         Connection con = null;
         Statement ps = null;
         ResultSet rs = null;
@@ -103,8 +114,8 @@ public class ObjectRepository {
                 }
             }
         }
-        catch (JdbcSQLException ex){
-            ex.printStackTrace();
+        catch(Exception ex){
+            throw exceptionFactory.createException(ex);
         } finally{
             try {
                 ps.close();
@@ -116,7 +127,7 @@ public class ObjectRepository {
         return value;
     }
 
-    public void update(String objectName, Object object, int id) throws SQLException, IOException {
+    public Map update(String objectName, Map object, int id) throws SQLException, IOException, RestException {
         Connection con = null;
         PreparedStatement ps = null;
         try{
@@ -125,17 +136,23 @@ public class ObjectRepository {
             ps.setClob(1, new StringReader(jsonUtil.toJSON(object)));
             ps.setInt(2, id);
             ps.executeUpdate();
-        } finally{
+            object.put("id",id);
+            return object;
+        }catch(Exception ex){
+            throw exceptionFactory.createException(ex);
+        }finally {
             try {
-                ps.close();
-                con.close();
+                if(ps != null)
+                    ps.close();
+                if(con != null)
+                    con.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void delete(String objectName, int id) throws SQLException, IOException {
+    public void delete(String objectName, int id) throws SQLException, IOException, RestException {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -145,7 +162,9 @@ public class ObjectRepository {
             ps = con.prepareStatement("delete from " + objectName + " where id = ?;");
             ps.setInt(1, id);
             ps.executeUpdate();
-        } finally{
+        } catch(Exception ex){
+            throw exceptionFactory.createException(ex);
+        }finally{
             try {
                 ps.close();
                 con.close();
@@ -155,7 +174,7 @@ public class ObjectRepository {
         }
     }
 
-    public void dropDatabase() throws SQLException{
+    public void dropDatabase() throws SQLException, RestException {
         Connection con = null;
         Statement st = null;
         try{
@@ -170,7 +189,9 @@ public class ObjectRepository {
             }
             dropTablesSB.append("SET FOREIGN_KEY_CHECKS = 0;\n");
             st.executeUpdate(dropTablesSB.toString());
-        } finally{
+        } catch(Exception ex){
+            throw exceptionFactory.createException(ex);
+        }finally{
             try {
                 st.close();
                 con.close();

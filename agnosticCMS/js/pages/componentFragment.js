@@ -20,7 +20,7 @@ $(function(){
     }
 
     if(AGNOSTIC.Util.getParam('id')){
-        AGNOSTIC.Ajax.get('componentFragment',{id: AGNOSTIC.Util.getParam('id')},function(r){
+        AGNOSTIC.Ajax.get('componentFragment?id='+AGNOSTIC.Util.getParam('id'),null,function(r){
             $('#name').val(r.name);
             $('#type').val(r.type);
             $('#content').val(r.code);

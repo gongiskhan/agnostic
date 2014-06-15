@@ -1,6 +1,7 @@
 package org.agnostic.error;
 
 import org.agnostic.util.JSONUtil;
+import org.h2.jdbc.JdbcSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Component;
@@ -20,15 +21,25 @@ public class ExceptionFactory {
     @Autowired
     JSONUtil jsonUtil;
 
-    public RestException throwException(Exception exception) {
+    public RestException createException(Exception exception) {
+        RestException rex;
         if(exception instanceof ConstraintViolationException){
-            return create((ConstraintViolationException)exception);
+            rex = create((ConstraintViolationException)exception);
         }
         else if(exception instanceof JpaSystemException){
-            return create((JpaSystemException)exception);
+            rex = create((JpaSystemException)exception);
+        }else if(exception instanceof JdbcSQLException){
+            rex = create((JdbcSQLException)exception);
         }else{
-            return new RestException(exception);
+            rex = new RestException(exception);
         }
+        for(Error r : rex.getErrors()){
+            if(r.getCode() != null){
+                rex.setErrorCode(r.getCode());
+                break;
+            }
+        }
+        return rex;
     }
 
     private RestException create(ConstraintViolationException originalException){
@@ -59,6 +70,28 @@ public class ExceptionFactory {
         Error error = new Error();
         error.setMessage(originalException.getMessage());
         error.setCode(ErrorCode.DATABASE);
+        errors.add(error);
+
+        String errorsJSON = "";
+        try {
+            errorsJSON = jsonUtil.toJSON(errors);
+        } catch (IOException e) {
+            return new RestException(originalException);
+        }
+
+        return new RestException(errors, errorsJSON);
+    }
+
+    private RestException create(JdbcSQLException originalException){
+
+        List<Error> errors = new ArrayList<Error>();
+        Error error = new Error();
+        error.setMessage(originalException.getMessage());
+        if(originalException.getMessage().contains("not found")){
+            error.setCode(ErrorCode.NOT_FOUND);
+        }else{
+            error.setCode(ErrorCode.DATABASE);
+        }
         errors.add(error);
 
         String errorsJSON = "";

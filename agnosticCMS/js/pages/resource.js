@@ -48,10 +48,8 @@ $(function(){
             service: $('#service').val(),
             content: content,
             priority: currentResource.priority
-        },AGNOSTIC.Util.getParam('id') ? function(){
+        },function(){
             $('#info').text('Saved Successfully').css('display','block');
-        } : function(res){
-            window.location.href = "resource.html?id="+res.id;
         });
     }
 

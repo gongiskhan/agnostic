@@ -1,7 +1,7 @@
 var table;
 $(function(){
     $('title, h1').html('Component Fragments');
-    AGNOSTIC.Ajax.get('componentFragments',undefined, function(r){
+    AGNOSTIC.Ajax.get('componentFragment',undefined, function(r){
         table = AGNOSTIC.Table.create({ entityName:'componentFragment', target:'#componentFragments', data:r, editable:true });
     });
     $('#searchContentButton').click(function(){

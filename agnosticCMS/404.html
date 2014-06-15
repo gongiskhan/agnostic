@@ -10,7 +10,6 @@ function heredoc(){/*
         <p><a href="index.html">Back to the home page</a></p>
     </div>
 </div>
-<script type="text/javascript" src="js/PageLoader.js"></script>
 */
 };
-var content = ('\n'+heredoc.toString().match(/\/\*\s*([\s\S]*?)\s*\*\//m)[1]+'\n');
+window.cmsPageContent = ('\n'+heredoc.toString().match(/\/\*\s*([\s\S]*?)\s*\*\//m)[1]+'\n');

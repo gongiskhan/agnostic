@@ -9,7 +9,8 @@ public enum ErrorCode {
     DATABASE(500),
     DUPLICATE(409),
     REFERENCED(202),
-    AUTHENTICATION(401);
+    AUTHENTICATION(401),
+    NOT_FOUND(404);
 
     private final int code;
     ErrorCode(int code){

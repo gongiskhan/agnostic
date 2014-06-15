@@ -4,7 +4,6 @@ function heredoc(){
 <br/>
 <div class="well" id="viewGroups"></div>
 <div id="modalContainer"></div>
-<script type="text/javascript" src="js/pages/viewGroups.js"></script>
 */
 };
-var content = ('\n'+heredoc.toString().match(/\/\*\s*([\s\S]*?)\s*\*\//m)[1]+'\n');
+window.cmsPageContent = ('\n'+heredoc.toString().match(/\/\*\s*([\s\S]*?)\s*\*\//m)[1]+'\n');

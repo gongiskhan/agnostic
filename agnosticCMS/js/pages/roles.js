@@ -1,12 +1,19 @@
 $(function(){
     $('title, h1').html('Roles');
-    AGNOSTIC.Ajax.get('roles',undefined, function(r){
-        for(var i = 0; i < r.length; i++){
-            $('#roles').append('<li><span>'+r[i].name+'</span><a role=\"button\" class=\"removeButton\"><i class=\"icon-remove\"><\/i><\/a></li>');
+    AGNOSTIC.Ajax.get('role?id=1',undefined, function(r){
+        if(r.value){
+            var roles = r.value;
+            for(var i = 0; i < roles.length; i++){
+                $('#roles').append('<li><span>'+roles[i].name+'</span><a role=\"button\" class=\"removeButton\"><i class=\"icon-remove\"><\/i><\/a></li>');
+            }
+            $('.removeButton').on('click',function(e){
+                e.preventDefault();
+                $(e.target).closest('li').remove();
+            });
         }
-        $('.removeButton').on('click',function(e){
-            e.preventDefault();
-            $(e.target).closest('li').remove();
+    },function(){
+        AGNOSTIC.Ajax.post('role',{},function(){
+            PageLoader.render('roles.html');
         });
     });
     $('.listButton').click(function(e){
@@ -27,7 +34,7 @@ $(function(){
         $('#roles li').each(function(it, el){
             rolesArray.push({name: $(el).find('span').html()});
         });
-        AGNOSTIC.Ajax.post('roles', rolesArray);
+        AGNOSTIC.Ajax.put('role', {id:1,value:rolesArray});
     });
 
 });

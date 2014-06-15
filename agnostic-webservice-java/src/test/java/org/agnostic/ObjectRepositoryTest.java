@@ -1,7 +1,11 @@
 package org.agnostic;
 
 import org.agnostic.config.PersistenceConfig;
+import org.agnostic.error.RestException;
 import org.agnostic.persistence.ObjectRepository;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang.ObjectUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -14,6 +18,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,22 +42,20 @@ public class ObjectRepositoryTest extends AbstractTransactionalJUnit4SpringConte
 
     @Test
     public void testCreate() throws Exception{
-        Object obj = new Object(){
-            public String name = "yeah";
-            public String foo = "bar";
-            public int baz = 5;
-        };
-        objectRepository.create("obj",obj);
+        Map m = new HashMap();
+        m.put("name","yeah");
+        m.put("foo","bar");
+        m.put("baz",5);
+        objectRepository.create("obj", m);
     }
 
     @Test
     public void testFetch() throws Exception{
-        Object obj = new Object(){
-            public String name = "yeah";
-            public String foo = "bar";
-            public int baz = 5;
-        };
-        objectRepository.create("obj",obj);
+        Map m = new HashMap();
+        m.put("name","yeah");
+        m.put("foo","bar");
+        m.put("baz",5);
+        objectRepository.create("obj", m);
         Map result = objectRepository.fetch("obj",1);
         assertNotNull(result);
         assertEquals("yeah",result.get("name"));
@@ -60,16 +63,14 @@ public class ObjectRepositoryTest extends AbstractTransactionalJUnit4SpringConte
 
     @Test
     public void testUpdate() throws Exception{
-        Object obj = new Object(){
-            public String name = "yeah";
-            public String foo = "bar";
-            public int baz = 5;
-        };
-        objectRepository.create("obj",obj);
-        Object obj2 = new Object(){
-            public String name = "foobar";
-        };
-        objectRepository.update("obj",obj2,1);
+        Map m = new HashMap();
+        m.put("name","yeah");
+        m.put("foo","bar");
+        m.put("baz",5);
+        objectRepository.create("obj", m);
+        Map m2 = new HashMap();
+        m2.put("name","foobar");
+        objectRepository.update("obj",m2,1);
         Map result = objectRepository.fetch("obj",1);
         assertNotNull(result);
         assertEquals("foobar",result.get("name"));
@@ -77,24 +78,21 @@ public class ObjectRepositoryTest extends AbstractTransactionalJUnit4SpringConte
 
     @Test
     public void testFetchAll() throws Exception{
-        Object obj = new Object(){
-            public String name = "yeah";
-            public String foo = "bar";
-            public int baz = 5;
-        };
-        objectRepository.create("obj",obj);
-        Object obj2 = new Object(){
-            public String name = "yeah2";
-            public String foo = "bar2";
-            public int baz = 2;
-        };
-        objectRepository.create("obj",obj2);
-        Object obj3 = new Object(){
-            public String name = "yeah3";
-            public String foo = "bar3";
-            public int baz = 3;
-        };
-        objectRepository.create("obj",obj3);
+        Map m = new HashMap();
+        m.put("name","yeah");
+        m.put("foo","bar");
+        m.put("baz",5);
+        objectRepository.create("obj", m);
+        Map m2 = new HashMap();
+        m2.put("name","yeah2");
+        m2.put("foo","bar2");
+        m2.put("baz",2);
+        objectRepository.create("obj", m2);
+        Map m3 = new HashMap();
+        m3.put("name","yeah3");
+        m3.put("foo","bar3");
+        m3.put("baz",3);
+        objectRepository.create("obj", m3);
         List<Map> result = objectRepository.fetchAll("obj");
         assertEquals(3,result.size());
         assertEquals("yeah",result.get(0).get("name"));
@@ -108,16 +106,14 @@ public class ObjectRepositoryTest extends AbstractTransactionalJUnit4SpringConte
         assertEquals(3,result.get(2).get("baz"));
     }
 
-    @Test
+    @Test(expected = RestException.class)
     public void testDelete() throws Exception{
-        Object obj = new Object(){
-            public String name = "yeah";
-            public String foo = "bar";
-            public int baz = 5;
-        };
-        objectRepository.create("obj",obj);
+        Map m = new HashMap();
+        m.put("name","yeah");
+        m.put("foo","bar");
+        m.put("baz",5);
+        objectRepository.create("obj", m);
         objectRepository.delete("obj",1);
-        Map result = objectRepository.fetch("obj",1);
-        assertNull(result);
+        objectRepository.fetch("obj", 1);
     }
 }

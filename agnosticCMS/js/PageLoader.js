@@ -2,57 +2,56 @@ String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
 };
 (function(AGNOSTIC, undefined){
-    (function(Template){
+    (function(PageLoader){
 
-        Template.loadXMLDoc = function(url, callback){
+        window.addEventListener('load',function(){
+            PageLoader.render('views.html');
+            setTimeout(function(){
+                $('.sidebar-nav a:not(".submenued")').on('click',function(e){
+                    e.preventDefault();
+                    e.stopPropagation();
+                    PageLoader.render($(e.target).attr('href'));
+                    return false;
+                });
+            },1000);
+        },false);
+
+        PageLoader.topHtml = '';
+        PageLoader.bottomHtml = '';
+
+        PageLoader.loadXMLDoc = function(url, callback){
             var script = document.createElement("script");
             script.type = "text/javascript";
             script.onload = function () {
-                callback(content);
+                callback(window.cmsPageContent);
                 document.getElementsByTagName("head")[0].removeChild(script);
             };
             script.src = url;
             document.getElementsByTagName("head")[0].appendChild(script);
-            /*
-            var xmlhttp=new XMLHttpRequest();
-            xmlhttp.onreadystatechange=function(){
-                if (xmlhttp.readyState==4 && xmlhttp.status==200){
-                    callback(xmlhttp.responseText);
-                }
-            }
-            xmlhttp.open("GET",url,false);
-            xmlhttp.send();
-            */
         }
 
-        Template.render = function(){
+        PageLoader.render = function(path){
+            $('.alert').fadeOut();
+            PageLoader.loadXMLDoc(path,function(r){
+                $('#pageContent').html(r);
+                var pageScript = document.createElement('script');
+                pageScript.setAttribute('id','pageScript');
+                pageScript.setAttribute('type','text/javascript');
+                pageScript.setAttribute('src','js/pages/'+path.replace('html','js'));
+                $('#pageScript').remove();
+                document.getElementsByTagName("body")[0].appendChild(pageScript);
 
-            var html ='',
-                path = location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
-            Template.loadXMLDoc('template/top.html',function(r){
-                html += r;
-                Template.loadXMLDoc(path,function(r){
-                    html += (r.replace('<script type="text/javascript" src="js/PageLoader.js"></script>',''));
-                    Template.loadXMLDoc('template/bottom.html',function(r){
-                        html += r;
-                        window.addEventListener('load',function(){
-                            document.open();
-                            document.write(html);
-                            document.close();
-                            document.addEventListener('DOMContentLoaded',function(){
-                                var pageScript = document.createElement('script');
-                                pageScript.setAttribute('type','text/javascript');
-                                pageScript.setAttribute('src','js/pages/'+path.replace('html','js'));
-                                document.getElementsByTagName("body")[0].appendChild(pageScript);
-                                $('body').fadeIn();
-                            });
-                        },false);
-                    });
-                });
+
+                var currentPage = $('.sidebar-nav a[href="'+path+'"]');
+                if(currentPage.size() > 0 && !currentPage.hasClass('.nav-header')){
+                    currentPage.parent().parent().removeClass('collapse');
+                    currentPage.parent().parent().addClass('in');
+                }else{
+                    $('.sidebar-nav a[href="index.html"]').parent().parent().removeClass('collapse');
+                    $('.sidebar-nav a[href="index.html"]').parent().parent().addClass('in');
+                }
             });
         }
 
-        Template.render();
-
-    })(AGNOSTIC.Template = AGNOSTIC.Template || {});
+    })(AGNOSTIC.PageLoader = AGNOSTIC.PageLoader || {});
 })(window.AGNOSTIC = window.AGNOSTIC || {});

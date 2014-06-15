@@ -9,6 +9,7 @@ import java.util.List;
 public class RestException extends Exception {
 
     List<Error> errors;
+    ErrorCode errorCode;
 
     public RestException(Exception exception){
         super(exception);
@@ -25,5 +26,13 @@ public class RestException extends Exception {
 
     public List<Error> getErrors() {
         return errors;
+    }
+
+    public ErrorCode getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(ErrorCode errorCode) {
+        this.errorCode = errorCode;
     }
 }

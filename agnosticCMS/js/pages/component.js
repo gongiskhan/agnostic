@@ -82,12 +82,12 @@ $(function () {
             currentComponent = r;
             $('#name').val(r.name);
             $('#content').val(r.template);
-            AGNOSTIC.Ajax.get('resources', undefined, function (resources) {
+            AGNOSTIC.Ajax.get('resource', undefined, function (resources) {
                 afterLoad(r, resources);
             });
         });
     } else {
-        AGNOSTIC.Ajax.get('resources', undefined, function (resources) {
+        AGNOSTIC.Ajax.get('resource', undefined, function (resources) {
             afterLoad(null, resources);
         });
     }
@@ -149,7 +149,7 @@ $(function () {
     $('.addComponentFragmentButton').on('click', function (e) {
         e.preventDefault();
 
-        AGNOSTIC.Ajax.get('componentFragments', undefined, function (componentFragments) {
+        AGNOSTIC.Ajax.get('componentFragment', undefined, function (componentFragments) {
             componentFragmentsModal = AGNOSTIC.Modal.create({target: '#modalContainer', legend: 'Component Fragments', formFields: [
                 {
                     label: 'Component Fragments',

@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
         try{
             savedUser = userRepository.save(user);
         }catch(Exception ex){
-            throw exceptionFactory.throwException(ex);
+            throw exceptionFactory.createException(ex);
         }
         return savedUser;
     }

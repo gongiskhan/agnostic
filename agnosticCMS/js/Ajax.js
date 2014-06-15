@@ -34,14 +34,17 @@
             $(spinnerEl).hide();
         };
 
-        Ajax.get = function(url, data, callback){
+        Ajax.get = function(url, data, callback, handleNotFound){
             spin();
             $.ajax({
                 type: 'GET',
                 url: window.contextPath + url,
                 data: data,
                 complete:function(res){
-                    if(res.status == 200 && res.responseText){
+                    if(res.status == 404 && typeof handleNotFound != 'undefined'){
+                        handleNotFound();
+                    }
+                    else if(res.status == 200 && res.responseText || (res.status == 404 && typeof handleNotFound == 'undefined')){
                         callback(JSON.parse(res.responseText));
                         var message = localStorage.getItem("AGNOSTIC_Message");
                         if(message){
@@ -76,7 +79,7 @@
                     if(res.status == 200){
                         if(callback)
                             callback(JSON.parse(res.responseText ||"{}"));
-                        localStorage.setItem("AGNOSTIC_Message",'Deleted: '+res.responseText);
+                        $('#info').html('Deleted: '+res.responseText).show();
                     }else{
                         try{
                             $('#error').html(JSON.parse(res.responseText).error).show();
@@ -111,10 +114,7 @@
                             callback(r);
                         }
                         else{
-                            try{
-                            localStorage.setItem("AGNOSTIC_Message",'Saved: '+res.responseText);
-                            }catch(err){}
-                            window.location.href=window.contextPath+url+'.html?id='+ r.id;
+                            $('#info').html('Saved. '+res.responseText).show();
                         }
                     }
                     else{
@@ -151,10 +151,7 @@
                             callback(r);
                         }
                         else{
-                            try{
-                                localStorage.setItem("AGNOSTIC_Message",'Saved: '+res.responseText);
-                            }catch(err){}
-                            window.location.href=window.contextPath+url+'.html?id='+ r.id;
+                            $('#info').html('Saved. '+res.responseText).show();
                         }
                     }
                     else{

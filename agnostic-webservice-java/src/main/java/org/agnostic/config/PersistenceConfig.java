@@ -24,7 +24,7 @@ import java.util.Properties;
 @EnableJpaRepositories("org.agnostic.persistence")
 @EnableTransactionManagement
 @PropertySource(value = {"classpath:database.properties"})
-@ComponentScan(basePackages = {"org.agnostic.persistence","org.agnostic.util"})
+@ComponentScan(basePackages = {"org.agnostic.persistence","org.agnostic.util","org.agnostic.error"})
 public class PersistenceConfig {
 
     private static final String PROPERTY_NAME_DATABASE_URL = "jdbc.url";

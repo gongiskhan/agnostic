@@ -32,6 +32,49 @@
         }
 
         MemberOfTheWorkingForce.formatPage = function(template, view){
+formatPage(template,view);
+
+            function formatPage(template, view){
+                var page = template.content;
+                page = page.replaceAll('$TITLE',view.title);
+                page = page.replaceAll('$VIEW',view.name);
+                //TODO: pensar em sistema de colocar placeholders que são substituidos aqui (o melhor seria chamar um script que devolve um objecto para pode ir buscar informacao a webservices por exemplo)
+                //page = page.replaceAll('[PLACEHOLDER_SERVICE]',view.service);
+
+                var componentScriptResources = [];
+                for(var i = 0; i < view.components.length; i++)
+                    mergeProperty(view.components[i],'scriptResources','subComponents',componentScriptResources);
+                var componentStyleResources = [];
+                for(var i = 0; i < view.components.length; i++)
+                    mergeProperty(view.components[i],'styleResources','subComponents',componentStyleResources);
+
+                console.debug('MERGED:');
+                console.debug(componentScriptResources);
+                console.debug(componentStyleResources);
+                for(var i = 0; i < componentScriptResources.length; i++){
+                    console.debug(componentScriptResources[i]);
+                }
+                for(var i = 0; i < componentStyleResources.length; i++){
+                    console.debug(componentStyleResources[i]);
+                }
+
+                //self.postMessage({cmd:'formatted', page: page});
+            }
+            function mergeProperty(object,property,childObject,result){
+                if(!result)
+                    result = [];
+                for(var i = 0; i < object[property].length; i++){
+                    if(!AGNOSTIC.Util.arrayContains(result, 'id', object[property][i].id)){
+                        result.push(object[property][i]);
+                    }
+                }
+                for(var i = 0; i < object[childObject].length; i++){
+                    mergeProperty(object[childObject][i],property,childObject,result);
+                }
+                return result;
+            }
+
+            /*
             var worker = new Worker('js/worker/pageFormatter.js');
             if(currentWorkers.pageFormatter){
                 currentWorkers.pageFormatter.postMessage({cmd:'stop'});
@@ -41,8 +84,9 @@
             currentWorkers.pageFormatter = worker;
             worker.addEventListener('message',function(e){
                 if(e.data.cmd == 'formatted'){
-                    console.debug(6  );
-                    console.debug(view.id);
+                    //console.debug(6  );
+                    //console.debug(view.id);
+                    /*
                     if(view.id){
                         AGNOSTIC.Ajax.put('page',{id: view.id, name: view.name, content: e.data.page}, function(){
                             console.debug('Updated page: '+view.name);
@@ -57,11 +101,13 @@
                             console.debug(r);
                         });
                     },2000);
+
                     currentWorkers.pageFormatter = null;
                     delete currentWorkers.pageFormatter;
                 }
             });
             worker.postMessage({cmd:'format', template: template, view: view});
+            */
         }
 
     })(AGNOSTIC.Worker = AGNOSTIC.Worker || {});

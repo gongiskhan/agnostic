@@ -3,34 +3,34 @@ $(function(){
     var resourcesMultiSelect,
         content;
 
-    AGNOSTIC.Ajax.get('template', {id: 1}, function(r){
-        var template = r;
-        $('#content').val(template.content);
-        AGNOSTIC.Ajax.get('resource',undefined, function(r){
-        if(r == 500){
+    AGNOSTIC.Ajax.get('template?id=1', undefined, function(r){
+        if(typeof r == 'undefined' || r == 500){
             AGNOSTIC.Ajax.post('template',{id:1,content:''});
             window.location.reload();
-        }else{
-            var pageResources = [];
-            for(var i = 0; i < r.length; i++){
-                if(r[i].type == 'CSS' || r[i].type == 'JavaScript' || r[i].name.indexOf('.css') != -1|| r[i].name.indexOf('.js') != -1){
-                    pageResources.push(r[i]);
+        }else {
+            var template = r;
+            $('#content').val(template.content);
+            AGNOSTIC.Ajax.get('resource',undefined, function(r){
+                var pageResources = [];
+                for(var i = 0; i < r.length; i++){
+                    if(r[i].type == 'CSS' || r[i].type == 'JavaScript' || r[i].name.indexOf('.css') != -1|| r[i].name.indexOf('.js') != -1){
+                        pageResources.push(r[i]);
+                    }
                 }
-            }
-            resourcesMultiSelect = AGNOSTIC.MultiSelect.create({
-                target: '#resourcesMultiSelect',
-                legend: 'Resources',
-                unique: true,
-                data:{
-                    availableList: pageResources,
-                    selectedList: template && template.resources ? template.resources : null
-                }
+                resourcesMultiSelect = AGNOSTIC.MultiSelect.create({
+                    target: '#resourcesMultiSelect',
+                    legend: 'Resources',
+                    unique: true,
+                    data:{
+                        availableList: pageResources,
+                        selectedList: template && template.resources ? template.resources : null
+                    }
+                });
             });
+            AGNOSTIC.CodeEditor.makeEditable('content','html', function(editor){
+                content = editor.getValue();
+            },true);
         }
-        });
-        AGNOSTIC.CodeEditor.makeEditable('content','html', function(editor){
-            content = editor.getValue();
-        },true);
     });
 
     function save(){
