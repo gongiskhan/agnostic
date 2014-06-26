@@ -31,10 +31,11 @@
             alert('Unfortunately you will not be able to use Agnostic CMS in this browser. Please use a recent version of Chrome or Firefox for best results and absolutely required is a browser that supports Web Workers.');
         }
 
-        MemberOfTheWorkingForce.formatPage = function(template, view){
-formatPage(template,view);
+        MemberOfTheWorkingForce.formatPage = function(template, view, viewGroups){
 
-            function formatPage(template, view){
+            formatPage(template,view, viewGroups);
+
+            function formatPage(template, view, viewGroups){
                 var page = template.content;
                 page = page.replaceAll('$TITLE',view.title);
                 page = page.replaceAll('$VIEW',view.name);
@@ -48,15 +49,12 @@ formatPage(template,view);
                 for(var i = 0; i < view.components.length; i++)
                     mergeProperty(view.components[i],'styleResources','subComponents',componentStyleResources);
 
-                console.debug('MERGED:');
-                console.debug(componentScriptResources);
-                console.debug(componentStyleResources);
-                for(var i = 0; i < componentScriptResources.length; i++){
-                    console.debug(componentScriptResources[i]);
-                }
-                for(var i = 0; i < componentStyleResources.length; i++){
-                    console.debug(componentStyleResources[i]);
-                }
+                page = page.replaceAll('$TEMPLATE_RESOURCES',template.resources);
+                page = page.replaceAll('$SCRIPT_COMPONENT_RESOURCES',componentScriptResources);
+                page = page.replaceAll('$STYLE_COMPONENT_RESOURCES',componentStyleResources);
+                var menuHTML = '';
+                formatMenu(viewGroups,menuHTML);
+                page = page.replaceAll('$MENU',menuHTML);
 
                 //self.postMessage({cmd:'formatted', page: page});
             }
@@ -68,6 +66,7 @@ formatPage(template,view);
                         result.push(object[property][i]);
                     }
                 }
+                if(object[childObject])
                 for(var i = 0; i < object[childObject].length; i++){
                     mergeProperty(object[childObject][i],property,childObject,result);
                 }

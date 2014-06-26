@@ -10,6 +10,7 @@ import org.eclipse.jetty.webapp.WebXmlConfiguration;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
 
 import javax.annotation.Resource;
@@ -20,6 +21,7 @@ import java.io.IOException;
 * User: ggomes
 */
 @Configuration
+@Import(PersistenceConfig.class)
 public class WebServerConfig {
 
     @Resource

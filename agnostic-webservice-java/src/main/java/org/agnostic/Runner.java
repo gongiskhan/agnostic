@@ -2,6 +2,9 @@ package org.agnostic;
 
 import org.agnostic.config.WebServerConfig;
 import org.agnostic.config.WebServerContext;
+import org.agnostic.model.User;
+import org.agnostic.persistence.ObjectRepository;
+import org.agnostic.persistence.UserRepository;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.Options;
@@ -15,6 +18,8 @@ import org.springframework.core.io.support.PropertiesLoaderUtils;
 
 import java.net.URL;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This is the starting point of the application. It's main function is to start the Web Server and the web application.

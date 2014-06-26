@@ -62,9 +62,11 @@ $(function(){
                     id: files[i].id,
                     name: files[i].name,
                     type: files[i].type,
-                    content: files[i].content
+                    contentGroup: $('#contentGroup').val(),
+                    content: files[i].content,
+                    objectName: 'resource'
                 },i < (files.length-1) ? function(){} : function(){
-                    window.location.href=window.contextPath+'resources.html';
+                    AGNOSTIC.PageLoader.render('resources.html');
                 });
             }
         }else{

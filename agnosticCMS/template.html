@@ -1,19 +1,52 @@
 function heredoc(){
 /*
 <div class="alert alert-info">
-    <strong>Supported placeholders:</strong><br/>
+    <strong>Template types:</strong><br/>
     <ul>
-        <li>$VIEW - The contents of a view as defined in the Views area.</li>
-        <li>$TITLE - The title of the View.</li>
-        <li>$MENU - The menu based on View Groups as top level and Views as sub-levels.</li>
-        <li>$TEMPLATE_RESOURCES - All Template Resources as defined below.</li>
-        <li>$STYLE_COMPONENT_RESOURCES - Component Resources defined as STYLE.</li>
-        <li>$SCRIPT_COMPONENT_RESOURCES - Component Resources defined as SCRIPT.</li>
+        <li>layout - Choose the master template that defines the base layout of all pages. This template gets access to all the composing objects after formatted: formattedMenu, formattedComponents, formattedScriptResources, formattedStyleResources  and access to the objects before formatting: viewGroups, components, templateResources</li>
+        <li>menu - The menu is based on the existing View Groups. It will be passed into the layout template after formatting as the object "formattedMenu".</li>
+        <li>component - The template for all Components and sub-components. It will be passed into the layout template after formatting as the object "formattedComponents".</li>
+        <li>scriptResource - The template for importing script components. It will be passed into the layout template after formatting as the object "formattedScriptResources".</li>
+        <li>styleResource - The template for importing style components. It will be passed into the layout template after formatting as the object "formattedStyleResources".</li>
     </ul>
 </div>
 <div class="fieldContainer">
-    <label>Template</label>
-    <!--<textarea rows="30" class="input-xxlarge" id="content" style="width:90%; height:90%;"></textarea>-->
+    <label for="type">Type</label>
+    <select class="select" id="type">
+        <option>layout</option>
+        <option>menu</option>
+        <option>component</option>
+        <option>scriptResource</option>
+        <option>styleResource</option>
+    </select>
+    <label>Content Group</label>
+    <select id="contentGroup" class="dropdown"></select>
+    <br/>
+    <label for="engine">Template Engine</label>
+    <select class="select" id="engine">
+        <option>JavaScript</option>
+        <option>KnockoutJS</option>
+        <option>JsRender</option>
+        <option>Angular</option>
+        <option>Mustache</option>
+        <option>Underscore</option>
+        <option>EJS</option>
+        <option>HandlebarsJS</option>
+        <option>Jade</option>
+    </select>
+    <div id="engineInfo" style="font-size:0.7em;margin-bottom:1em;color:gray;line-height: 1.2em;">
+        <span id="JavaScriptInfo">When JavaScript engine is selected there is nothing to learn if you already know the language. Just write in the template body a function render(formattedMenu, formattedComponents, formattedScriptResources, formattedStyleResources, viewGroups, components, templateResources) for the layout, render(viewGroups) for the menu template, render(components) for the component template, and render(resources) for scriptResource and styleResource templates.</span>
+        <span id="KnockoutJSInfo" style="display:none;">Visit <a target="_blank" href="http://knockoutjs.com/">KnockoutJS</a> to learn how to use these templates.</span>
+        <span id="JsRenderInfo" style="display:none;">Visit <a target="_blank" href="http://www.jsviews.com/">JsRender</a> to learn how to use these templates.</span>
+        <span id="AngularInfo" style="display:none;">Visit <a target="_blank" href="https://docs.angularjs.org/guide/templates">Angular.js</a> to learn how to use these templates.</span>
+        <span id="MustacheInfo" style="display:none;">Visit <a target="_blank" href="https://github.com/janl/mustache.js/">Mustache.js</a> to learn how to use these templates.</span>
+        <span id="UnderscoreInfo" style="display:none;">Visit <a target="_blank" href="http://underscorejs.org/">Underscore.js</a> to learn how to use these templates.</span>
+        <span id="EJSInfo" style="display:none;">Visit <a target="_blank" href="http://embeddedjs.com/">EJS</a> to learn how to use these templates.</span>
+        <span id="HandlebarsJSInfo" style="display:none;">Visit <a target="_blank" href="http://handlebarsjs.com/">HandlebarsJS</a> to learn how to use these templates.</span>
+        <span id="JadeInfo" style="display:none;">Visit <a target="_blank" href="http://jade-lang.com/">Jade</a> to learn how to use these templates.</span>
+    </div>
+        <!--<textarea rows="30" class="input-xxlarge" id="content" style="width:90%; height:90%;"></textarea>-->
+    <label for="content">Template Content</label>
     <div id="content"></div>
 </div>
 <br/><br/>

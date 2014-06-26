@@ -49,7 +49,9 @@ public class ObjectRepository {
             throw exceptionFactory.createException(ex);
         }finally{
             try {
+                if(ps != null)
                 ps.close();
+                if(con != null)
                 con.close();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -76,13 +78,30 @@ public class ObjectRepository {
                 IOUtils.copy(in, w);
                 String clobAsString = w.toString();
                 value = (Map) jsonUtil.fromJSON(clobAsString, Map.class);
+                for(Object obj : value.entrySet()){
+                    Map.Entry ent = (Map.Entry)obj;
+                    if(ent.getValue() != null && ent.getValue().getClass().isAssignableFrom(ArrayList.class)){
+                        List list = (ArrayList)ent.getValue();
+                        List newList = new ArrayList();
+                        for(Object listObj : list){
+                            if(Map.class.isAssignableFrom(listObj.getClass())){
+                                Map mapListObj = (Map)listObj;
+                                Map fromDB = fetch((String) mapListObj.get("objectName"),(int)mapListObj.get("id"));
+                                newList.add(fromDB);
+                            }
+                        }
+                        value.put(ent.getKey(), newList);
+                    }
+                }
                 value.put("id",theId);
             }
         }catch(Exception ex){
             throw exceptionFactory.createException(ex);
         } finally{
             try {
+                if(ps != null)
                 ps.close();
+                if(con != null)
                 con.close();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -118,7 +137,9 @@ public class ObjectRepository {
             throw exceptionFactory.createException(ex);
         } finally{
             try {
+                if(ps != null)
                 ps.close();
+                if(con != null)
                 con.close();
             } catch (SQLException e) {
                 e.printStackTrace();

@@ -16,16 +16,11 @@
 
     <link rel="stylesheet" type="text/css" href="css/theme.css">
     <link rel="stylesheet" type="text/css" href="css/agnostic.css">
-    <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.css">
-
-    <link rel="shortcut icon" href="images/favicon.ico" />
-</head>
-
-<!--[if lt IE 7 ]> <body class="ie ie6"> <![endif]-->
-<!--[if IE 7 ]> <body class="ie ie7 "> <![endif]-->
-<!--[if IE 8 ]> <body class="ie ie8 "> <![endif]-->
-<!--[if IE 9 ]> <body class="ie ie9 "> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!-->
+    <!--[if lt IE 7 ]> <body class="ie ie6"> <![endif]-->
+    <!--[if IE 7 ]> <body class="ie ie7 "> <![endif]-->
+    <!--[if IE 8 ]> <body class="ie ie8 "> <![endif]-->
+    <!--[if IE 9 ]> <body class="ie ie9 "> <![endif]-->
+    <!--[if (gt IE 9)|!(IE)]><!-->
 <body class="">
 <!--<![endif]-->
 
@@ -61,7 +56,18 @@
         <li ><a href="resource.html">New Resource</a></li>
         <li ><a href="addResources.html">Add Resources</a></li>
     </ul>
-    <a href="template.html" class="nav-header"><i class="icon-list-alt"></i>Template</a>
+
+    <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.css">
+
+    <link rel="shortcut icon" href="images/favicon.ico" />
+</head>
+    <a href="#template-menu" class="nav-header collapsed submenued" data-toggle="collapse"><i class="icon-list-alt"></i>Template <i class="icon-chevron-up"></i></a>
+    <ul id="template-menu" class="nav nav-list collapse">
+        <li><a href="templates.html">Templates</a></li>
+        <li ><a href="template.html">New Template</a></li>
+        <li ><a href="templateConfig.html">Template Config</a></li>
+    </ul>
+    <a href="contentGroups.html" class="nav-header"><i class="icon-cloud"></i>Content Groups</a>
 </div>
 
 <div class="content">
@@ -88,6 +94,7 @@
 <script src="lib/ace/ace.js"></script>
 <script src="lib/ace/ext-language_tools.js"></script>
 <script src="lib/spin.min.js"></script>
+<script src="lib/jszip.min.js"></script>
 <script src="js/Util.js"></script>
 <script src="js/String.js"></script>
 <script src="js/MultiSelect.js"></script>

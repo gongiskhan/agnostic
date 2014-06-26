@@ -207,7 +207,7 @@ $(function () {
 
     function save(){
         console.log('Saving Component.');
-        AGNOSTIC.Ajax.post('component', {
+        AGNOSTIC.Ajax[AGNOSTIC.Util.getParam('id') ? 'put' : 'post']('component', {
             id: AGNOSTIC.Util.getParam('id') ? AGNOSTIC.Util.getParam('id') : 0,
             name: $('#name').val(),
             template: content,
@@ -217,7 +217,8 @@ $(function () {
             componentFragmentConfigValues: componentFragmentsTable.getConfigData(),
             configElements: configElementsTable.getData(),
             scriptResources: scriptResourcesMultiSelect.getSelected(),
-            styleResources: styleResourcesMultiSelect.getSelected()
+            styleResources: styleResourcesMultiSelect.getSelected(),
+            objectName: 'component'
         });
     }
 

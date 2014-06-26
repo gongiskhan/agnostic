@@ -84,7 +84,8 @@ $(function(){
             name: $('#name').val(),
             type: $('#type').val(),
             code: content,
-            configElements: configElementsTable.getData()
+            configElements: configElementsTable.getData(),
+            objectName: 'componentFragment'
         });
     }
 

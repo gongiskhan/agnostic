@@ -7,7 +7,7 @@ $(function(){
     var content,
         currentResource = {};
 
-    function afterLoad(r, services){
+    function afterLoad(r, contentGroups){
         if(r){
             currentResource = r;
             $('#name').val(r.name);
@@ -22,21 +22,21 @@ $(function(){
         AGNOSTIC.CodeEditor.makeEditable('content',r ? r.type.toLowerCase() : 'javascript', function(editor){
             content = editor.getValue();
         },true);
-        for(var i = 0; i < services.length; i++){
-            $('#service').append('<option value="'+services[i]+'">'+services[i]+'</option>');
+        for(var i = 0; i < contentGroups.length; i++){
+            $('#contentGroup').append('<option value="'+contentGroups[i]+'">'+contentGroups[i]+'</option>');
         }
-        $('#service').val(r ? r.service : 'common');
+        $('#contentGroup').val(r ? r.contentGroups : 'common');
     }
 
     if(AGNOSTIC.Util.getParam('id')){
         AGNOSTIC.Ajax.get('resource',{id: AGNOSTIC.Util.getParam('id')}, function(r){
-            AGNOSTIC.Ajax.get('availableServices',undefined, function(services){
-                afterLoad(r, services);
+            AGNOSTIC.Ajax.get('contentGroup',undefined, function(contentGroups){
+                afterLoad(r, contentGroups);
             });
         });
     }else{
-        AGNOSTIC.Ajax.get('availableServices',undefined, function(services){
-            afterLoad(null, services);
+        AGNOSTIC.Ajax.get('contentGroup',undefined, function(contentGroups){
+            afterLoad(null, contentGroups);
         });
     }
 
@@ -45,10 +45,12 @@ $(function(){
             id: AGNOSTIC.Util.getParam('id') ? AGNOSTIC.Util.getParam('id') : 0,
             name: $('#name').val(),
             type: $('#type').val(),
-            service: $('#service').val(),
+            contentGroup: $('#contentGroup').val(),
             content: content,
-            priority: currentResource.priority
+            priority: currentResource.priority,
+            objectName: 'resource'
         },function(){
+            debugger;
             $('#info').text('Saved Successfully').css('display','block');
         });
     }

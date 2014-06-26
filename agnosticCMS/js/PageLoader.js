@@ -5,14 +5,22 @@ String.prototype.replaceAll = function(target, replacement) {
     (function(PageLoader){
 
         window.addEventListener('load',function(){
-            PageLoader.render('views.html');
+            if(AGNOSTIC.Util.getParam('loadPage')){
+                PageLoader.render(AGNOSTIC.Util.getParam('loadPage')+'.html');
+            }else{
+                PageLoader.render('views.html');
+            }
+            function handleNewPage(e){
+                e.preventDefault();
+                e.stopPropagation();
+                var target = $(e.target).prop('tagName') == 'A' ? e.target : e.target.parentNode;
+                PageLoader.render($(target).attr('href'));
+                return false;
+            }
             setTimeout(function(){
-                $('.sidebar-nav a:not(".submenued")').on('click',function(e){
-                    e.preventDefault();
-                    e.stopPropagation();
-                    PageLoader.render($(e.target).attr('href'));
-                    return false;
-                });
+                $('.sidebar-nav').on('click','a:not(".submenued")',handleNewPage);
+                $('#pageContent').on('click','a.newEntityButton',handleNewPage);
+                $('#pageContent').on('click','table.table a.editButton',handleNewPage);
             },1000);
         },false);
 
@@ -32,6 +40,12 @@ String.prototype.replaceAll = function(target, replacement) {
 
         PageLoader.render = function(path){
             $('.alert').fadeOut();
+            if(path.indexOf('?') != -1){
+                window.history.replaceState({}, document.title, (window.location.pathname+path.substring(path.indexOf('?'),path.length)));
+                path = (path.substring(0,path.lastIndexOf('?')));
+            }else{
+                window.history.replaceState({}, document.title, (window.location.pathname));
+            }
             PageLoader.loadXMLDoc(path,function(r){
                 $('#pageContent').html(r);
                 var pageScript = document.createElement('script');

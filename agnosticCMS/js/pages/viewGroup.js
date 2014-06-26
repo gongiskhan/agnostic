@@ -5,7 +5,7 @@ $(function(){
         viewsSelect,
         rolesSelect;
 
-    function afterMainLoad(viewGroup, views, roles, viewGroups, services){
+    function afterMainLoad(viewGroup, views, roles, viewGroups, contentGroups){
         viewGroupsSelect = AGNOSTIC.MultiSelect.create({
             target:'#viewGroupsMultiSelect',
             legend:'View Groups',
@@ -34,31 +34,33 @@ $(function(){
                 selectedList: viewGroup && viewGroup.roles ? viewGroup.roles : null
             }
         });
-        for(var i = 0; i < services.length; i++){
-            $('#service').append('<option value="'+services[i]+'">'+services[i]+'</option>');
+        if(contentGroups)
+        for(var i = 0; i < contentGroups.length; i++){
+            $('#contentGroup').append('<option value="'+contentGroups[i].id+'">'+contentGroups[i].name+'</option>');
         }
-        $('#service').val(viewGroup ? viewGroup.service : 'common');
+        if(viewGroup)
+            $('#contentGroup').val(viewGroup.contentGroup);
     }
     if(AGNOSTIC.Util.getParam('id')){
         AGNOSTIC.Ajax.get('viewGroup',{id: AGNOSTIC.Util.getParam('id')}, function(r){
             currentViewGroup = r;
             $('#name').val(r.name);
-            AGNOSTIC.Ajax.get('roles',undefined, function(roles){
-                AGNOSTIC.Ajax.get('viewGroups',undefined, function(viewGroups){
-                    AGNOSTIC.Ajax.get('views',undefined, function(views){
-                        AGNOSTIC.Ajax.get('availableServices',undefined, function(services){
-                            afterMainLoad(r, views, roles, viewGroups, services);
+            AGNOSTIC.Ajax.get('role?id=1',undefined, function(roles){
+                AGNOSTIC.Ajax.get('viewGroup',undefined, function(viewGroups){
+                    AGNOSTIC.Ajax.get('view',undefined, function(views){
+                        AGNOSTIC.Ajax.get('contentGroup?id=1',undefined, function(contentGroups){
+                            afterMainLoad(r, views, roles.value, viewGroups, contentGroups.value);
                         });
                     });
                 });
             });
         });
     }else{
-        AGNOSTIC.Ajax.get('roles',undefined, function(roles){
-            AGNOSTIC.Ajax.get('viewGroups',undefined, function(viewGroups){
-                AGNOSTIC.Ajax.get('views',undefined, function(views){
-                    AGNOSTIC.Ajax.get('availableServices',undefined, function(services){
-                        afterMainLoad(null, views, roles, viewGroups, services);
+        AGNOSTIC.Ajax.get('role?id=1',undefined, function(roles){
+            AGNOSTIC.Ajax.get('viewGroup',undefined, function(viewGroups){
+                AGNOSTIC.Ajax.get('view',undefined, function(views){
+                    AGNOSTIC.Ajax.get('contentGroup?id=1',undefined, function(contentGroups){
+                        afterMainLoad(null, views, roles.value, viewGroups, contentGroups.value);
                     });
                 });
             });
@@ -70,11 +72,12 @@ $(function(){
         AGNOSTIC.Ajax.post('viewGroup', {
             id: AGNOSTIC.Util.getParam('id') ? AGNOSTIC.Util.getParam('id') : 0,
             name: $('#name').val(),
-            service: $('#service').val(),
+            contentGroups: $('#contentGroups').val(),
             views: viewsSelect.getSelected(),
             roles: rolesSelect.getSelected(),
             viewGroups: viewGroupsSelect.getSelected(),
-            child: currentViewGroup.child
+            child: currentViewGroup.child,
+            objectName: 'viewGroup'
         });
     }
 
