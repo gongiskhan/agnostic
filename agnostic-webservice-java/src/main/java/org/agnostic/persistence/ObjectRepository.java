@@ -86,8 +86,16 @@ public class ObjectRepository {
                         for(Object listObj : list){
                             if(Map.class.isAssignableFrom(listObj.getClass())){
                                 Map mapListObj = (Map)listObj;
-                                Map fromDB = fetch((String) mapListObj.get("objectName"),(int)mapListObj.get("id"));
-                                newList.add(fromDB);
+                                String listObjName = (String) mapListObj.get("objectName");
+                                if(listObjName != null){
+                                    Map fromDB = fetch(listObjName,(int)mapListObj.get("id"));
+                                    newList.add(fromDB);
+                                }else{
+                                    newList.add(mapListObj);
+                                }
+                            }
+                            else{
+                                newList.add(listObj);
                             }
                         }
                         value.put(ent.getKey(), newList);

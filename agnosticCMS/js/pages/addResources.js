@@ -2,6 +2,13 @@ $(function(){
     $('title, h1').html('Add Resources');
     var files = [],
         doneReading;
+    AGNOSTIC.Ajax.get('deliverable',undefined, function(deliverables){
+        if(deliverables && deliverables.length > 0);
+        for(var i = 0; i < deliverables.length; i++){
+            var deliverable = deliverables[0].value[i];
+            $('#deliverable').append('<option value="'+deliverable+'">'+deliverable+'</option>');
+        }
+    });
 
     $('.fileContent').change(function(e){
 
@@ -58,13 +65,15 @@ $(function(){
     function save(){
         if(doneReading){
             for(var i = 0; i < files.length; i++){
+                var fileContent = files[i].content;
+                console.debug(fileContent);
                 AGNOSTIC.Ajax.post('resource', {
-                    id: files[i].id,
                     name: files[i].name,
                     type: files[i].type,
-                    contentGroup: $('#contentGroup').val(),
-                    content: files[i].content,
-                    objectName: 'resource'
+                    deliverable: $('#deliverable').val(),
+                    content: fileContent,
+                    objectName: 'resource',
+                    id: files[i].id
                 },i < (files.length-1) ? function(){} : function(){
                     AGNOSTIC.PageLoader.render('resources.html');
                 });

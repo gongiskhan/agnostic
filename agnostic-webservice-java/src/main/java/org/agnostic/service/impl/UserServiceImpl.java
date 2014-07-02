@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
             User storedUser = userRepository.findOne(user.getId());
             user.setPassword(storedUser.getPassword());
         }else{
-            user.setPassword(new ShaPasswordEncoder().encodePassword(user.getPassword(),""));
+            user.setPassword(new ShaPasswordEncoder().encodePassword(user.getPassword(),null));
         }
 
         User savedUser;

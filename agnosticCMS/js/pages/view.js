@@ -4,7 +4,7 @@ $(function(){
         rolesMultiSelect,
         addComponentsModal;
 
-    function afterLoad(view, roles, contentGroups){
+    function afterLoad(view, roles, deliverables){
 
         //Concatenate config elements with the component fragments for configuration.
         var cmpts = null;
@@ -67,7 +67,12 @@ $(function(){
                 selectedList: view && view.roles ? view.roles : null
             }
         });
-        $('#contentGroup').val(view ? view.contentGroup : 'common');
+        if(deliverables)
+            for(var i = 0; i < deliverables.length; i++){
+                $('#deliverable').append('<option value="'+deliverables[i].name+'">'+deliverables[i].name+'</option>');
+            }
+        if(view)
+            $('#deliverable').val(view.deliverable);
     }
     if(AGNOSTIC.Util.getParam('id')){
         $('.cloneButton').show();
@@ -78,14 +83,17 @@ $(function(){
                 $('#fullBody').next('span').find('.cb-icon-check').show();
                 $('#fullBody').next('span').find('.cb-icon-check-empty').hide();
             }
-
-            AGNOSTIC.Ajax.get('role?id=1',undefined, function(roles){
-                afterLoad(r, roles, null);
+            AGNOSTIC.Ajax.get('deliverable',null, function(deliverables){
+                AGNOSTIC.Ajax.get('role?id=1',null, function(roles){
+                    afterLoad(r, roles, deliverables);
+                });
             });
         });
     }else{
-        AGNOSTIC.Ajax.get('role?id=1',null, function(roles){
-            afterLoad(null, roles, null);
+        AGNOSTIC.Ajax.get('deliverable',null, function(deliverables){
+            AGNOSTIC.Ajax.get('role?id=1',null, function(roles){
+                afterLoad(null, roles, deliverables);
+            });
         });
     }
 
@@ -145,28 +153,19 @@ $(function(){
         console.log('Saving View.');
 
         var view = {
-            id: AGNOSTIC.Util.getParam('id') ? AGNOSTIC.Util.getParam('id') : 0,
             name: $('#name').val(),
             title: $('#title').val(),
-            contentGroup: $('contentGroup').val(),
+            deliverable: $('#deliverable').val(),
             fullBody: $('#fullBody').next('span').find('.cb-icon-check:visible').size() > 0,
             components: componentsTable.getData(),
             componentConfigValues: componentsTable.getConfigData(),
             subComponentConfigValues: componentsTable.getChildConfigData(),
             componentsSubComponentsIds: getComponentsSubComponentsIds(),
             roles: rolesMultiSelect.getSelected(),
-            objectName: 'view'
+            objectName: 'view',
+            id: AGNOSTIC.Util.getParam('id') ? AGNOSTIC.Util.getParam('id') : 0
         };
-        console.debug(view);
-        AGNOSTIC.Ajax[AGNOSTIC.Util.getParam('id') ? 'put' : 'post']('view', view, function(){
-            AGNOSTIC.Ajax.get('viewGroup',{contentGroup:'cont1'},function(response){
-
-                /*
-                AGNOSTIC.Worker.formatPage(template, view, response);
-                $('#info').html('Saved. '+res.responseText).show();
-                */
-            });
-        });
+        AGNOSTIC.Ajax[AGNOSTIC.Util.getParam('id') ? 'put' : 'post']('view', view);
     }
     $('.saveButton').on('click', function(e){
         e.preventDefault();

@@ -34,24 +34,26 @@
             $(spinnerEl).hide();
         };
 
-        Ajax.get = function(url, data, callback, handleNotFound){
+        Ajax.get = function(url, data, callback){
             spin();
             $.ajax({
                 type: 'GET',
                 url: window.contextPath + url,
                 data: data,
-                complete:function(res){
-                    if(res.status == 404 && typeof handleNotFound != 'undefined'){
-                        handleNotFound();
+                statusCode: {
+                    0: function(){
+                        $('#error').html('Unable to access webservice.').show();
                     }
-                    else if(res.status == 200 && res.responseText || (res.status == 404 && typeof handleNotFound == 'undefined')){
+                },
+                complete:function(res){
+                    if(res.status == 200 && res.responseText){
                         callback(JSON.parse(res.responseText));
                         var message = localStorage.getItem("AGNOSTIC_Message");
                         if(message){
                             $('#info').text(message).show();
                             localStorage.removeItem("AGNOSTIC_Message");
                         }
-                    }else if(res.status == 200){
+                    }else if(res.status == 200 || res.status == 204){
                         callback(res.responseText);
                     }else{
                         try{
@@ -73,7 +75,7 @@
             spin();
             $.ajax({
                 type: 'DELETE',
-                headers:{Authorization: 'Basic dGVzdDp0ZXN0'},
+                headers:{Authorization: 'Basic YWRtaW5AYWRtaW4uY29tOmFkbWlu'},
                 url: window.contextPath + url + "?id="+id,
                 complete:function(res){
                     if(res.status == 200){
@@ -100,7 +102,7 @@
             $.ajax({
                 type: 'POST',
                 url: window.contextPath + url,
-                headers:{Authorization: 'Basic dGVzdDp0ZXN0'},
+                headers:{Authorization: 'Basic YWRtaW5AYWRtaW4uY29tOmFkbWlu'},
                 data: JSON.stringify(data),
                 dataType: 'json',
                 contentType: 'application/json',
@@ -137,7 +139,7 @@
             $.ajax({
                 type: 'PUT',
                 url: window.contextPath + url,
-                headers:{Authorization: 'Basic dGVzdDp0ZXN0'},
+                headers:{Authorization: 'Basic YWRtaW5AYWRtaW4uY29tOmFkbWlu'},
                 data: JSON.stringify(data),
                 dataType: 'json',
                 contentType: 'application/json',

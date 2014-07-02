@@ -10,7 +10,8 @@ public enum ErrorCode {
     DUPLICATE(409),
     REFERENCED(202),
     AUTHENTICATION(401),
-    NOT_FOUND(404);
+    NOT_FOUND(404),
+    OBJECT_DOES_NOT_EXIST(204);
 
     private final int code;
     ErrorCode(int code){

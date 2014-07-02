@@ -59,7 +59,7 @@ public class AgnosticController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = {"/{objectName}"}, method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity create(@PathVariable("objectName") String objectName, @RequestBody Map object) throws Exception{
         try{
             return new ResponseEntity<Map>(repository.create(objectName, object), HttpStatus.OK);

@@ -5,7 +5,7 @@ $(function(){
         viewsSelect,
         rolesSelect;
 
-    function afterMainLoad(viewGroup, views, roles, viewGroups, contentGroups){
+    function afterMainLoad(viewGroup, views, roles, viewGroups, deliverables){
         viewGroupsSelect = AGNOSTIC.MultiSelect.create({
             target:'#viewGroupsMultiSelect',
             legend:'View Groups',
@@ -34,12 +34,12 @@ $(function(){
                 selectedList: viewGroup && viewGroup.roles ? viewGroup.roles : null
             }
         });
-        if(contentGroups)
-        for(var i = 0; i < contentGroups.length; i++){
-            $('#contentGroup').append('<option value="'+contentGroups[i].id+'">'+contentGroups[i].name+'</option>');
+        if(deliverables)
+        for(var i = 0; i < deliverables.length; i++){
+            $('#deliverable').append('<option value="'+deliverables[i].name+'">'+deliverables[i].name+'</option>');
         }
         if(viewGroup)
-            $('#contentGroup').val(viewGroup.contentGroup);
+            $('#deliverable').val(viewGroup.deliverable);
     }
     if(AGNOSTIC.Util.getParam('id')){
         AGNOSTIC.Ajax.get('viewGroup',{id: AGNOSTIC.Util.getParam('id')}, function(r){
@@ -48,8 +48,8 @@ $(function(){
             AGNOSTIC.Ajax.get('role?id=1',undefined, function(roles){
                 AGNOSTIC.Ajax.get('viewGroup',undefined, function(viewGroups){
                     AGNOSTIC.Ajax.get('view',undefined, function(views){
-                        AGNOSTIC.Ajax.get('contentGroup?id=1',undefined, function(contentGroups){
-                            afterMainLoad(r, views, roles.value, viewGroups, contentGroups.value);
+                        AGNOSTIC.Ajax.get('deliverable',undefined, function(deliverables){
+                            afterMainLoad(r, views, roles.value, viewGroups, deliverables);
                         });
                     });
                 });
@@ -59,8 +59,8 @@ $(function(){
         AGNOSTIC.Ajax.get('role?id=1',undefined, function(roles){
             AGNOSTIC.Ajax.get('viewGroup',undefined, function(viewGroups){
                 AGNOSTIC.Ajax.get('view',undefined, function(views){
-                    AGNOSTIC.Ajax.get('contentGroup?id=1',undefined, function(contentGroups){
-                        afterMainLoad(null, views, roles.value, viewGroups, contentGroups.value);
+                    AGNOSTIC.Ajax.get('deliverable',undefined, function(deliverables){
+                        afterMainLoad(null, views, roles.value, viewGroups, deliverables);
                     });
                 });
             });
@@ -70,14 +70,14 @@ $(function(){
     function save(){
         console.log('Saving View Group.');
         AGNOSTIC.Ajax.post('viewGroup', {
-            id: AGNOSTIC.Util.getParam('id') ? AGNOSTIC.Util.getParam('id') : 0,
             name: $('#name').val(),
-            contentGroups: $('#contentGroups').val(),
+            deliverables: $('#deliverables').val(),
             views: viewsSelect.getSelected(),
             roles: rolesSelect.getSelected(),
             viewGroups: viewGroupsSelect.getSelected(),
             child: currentViewGroup.child,
-            objectName: 'viewGroup'
+            objectName: 'viewGroup',
+            id: AGNOSTIC.Util.getParam('id') ? AGNOSTIC.Util.getParam('id') : 0
         });
     }
 

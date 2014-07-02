@@ -88,7 +88,7 @@ public class ExceptionFactory {
         Error error = new Error();
         error.setMessage(originalException.getMessage());
         if(originalException.getMessage().contains("not found")){
-            error.setCode(ErrorCode.NOT_FOUND);
+            error.setCode(ErrorCode.OBJECT_DOES_NOT_EXIST);
         }else{
             error.setCode(ErrorCode.DATABASE);
         }

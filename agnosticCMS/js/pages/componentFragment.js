@@ -80,12 +80,12 @@ $(function(){
     function save(){
         console.log('Saving Component Fragment.');
         AGNOSTIC.Ajax.post('componentFragment', {
-            id: AGNOSTIC.Util.getParam('id') ? AGNOSTIC.Util.getParam('id') : 0,
             name: $('#name').val(),
             type: $('#type').val(),
             code: content,
             configElements: configElementsTable.getData(),
-            objectName: 'componentFragment'
+            objectName: 'componentFragment',
+            id: AGNOSTIC.Util.getParam('id') ? AGNOSTIC.Util.getParam('id') : 0
         });
     }
 

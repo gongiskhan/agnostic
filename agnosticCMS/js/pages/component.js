@@ -208,7 +208,6 @@ $(function () {
     function save(){
         console.log('Saving Component.');
         AGNOSTIC.Ajax[AGNOSTIC.Util.getParam('id') ? 'put' : 'post']('component', {
-            id: AGNOSTIC.Util.getParam('id') ? AGNOSTIC.Util.getParam('id') : 0,
             name: $('#name').val(),
             template: content,
             subComponents:[],
@@ -218,7 +217,8 @@ $(function () {
             configElements: configElementsTable.getData(),
             scriptResources: scriptResourcesMultiSelect.getSelected(),
             styleResources: styleResourcesMultiSelect.getSelected(),
-            objectName: 'component'
+            objectName: 'component',
+            id: AGNOSTIC.Util.getParam('id') ? AGNOSTIC.Util.getParam('id') : 0
         });
     }
 

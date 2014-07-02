@@ -28,7 +28,7 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 @Import(value = {APIDocsConfig.class, ServiceConfig.class, SecurityConfig.class})
-@ComponentScan(basePackages = {"org.agnostic.controller", "org.agnostic.filter", "org.agnostic.util"})
+@ComponentScan(basePackages = {"org.agnostic.controller", "org.agnostic.filter", "org.agnostic.util","org.agnostic.bootstrap"})
 public class SpringConfig extends WebMvcConfigurerAdapter {
 
     @Bean

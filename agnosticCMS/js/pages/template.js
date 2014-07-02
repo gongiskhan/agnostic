@@ -1,10 +1,16 @@
 $(function(){
     $('title, h1').html('Template');
 
-    $('#engine').on('change',function(){
+    function updateEngineInfo(engine){
         $('#engineInfo span').hide();
-        $('#engineInfo span#'+$(this).val()+'Info').show();
+        $('#engineInfo span#'+engine+'Info').show();
+    }
+
+    $('#engine').on('change',function(){
+        updateEngineInfo($(this).val());
     });
+
+    updateEngineInfo('AgnosticPlaceholders');
 
     var resourcesMultiSelect,
         content;
@@ -30,8 +36,19 @@ $(function(){
         AGNOSTIC.CodeEditor.makeEditable('content','html', function(editor){
             content = editor.getValue();
         },true);
-        $('#engine').val(template.engine);
-        $('#contentGroup').val(template.contentGroup);
+        if(template) {
+            $('#name').val(template.name);
+            $('#engine').val(template.engine);
+        }
+        if(template && template.engine){
+            $('#engine option').each(function(it,el){
+               if($(this).html() == template.engine){
+                   $(this).attr('selected','selected');
+               }
+            });
+        }else{
+            $('#engine option:first-child').attr('selected', 'selected');
+        }
     }
 
     if(AGNOSTIC.Util.getParam('id')){
@@ -41,20 +58,21 @@ $(function(){
             afterLoad(template);
         });
     }else{
-       afterLoad(null);
+        afterLoad(null);
     }
 
     function save(){
         console.log('Saving Template.');
-        AGNOSTIC.Ajax[AGNOSTIC.Util.getParam('id') ? 'put': 'post']('template', {
-            id: AGNOSTIC.Util.getParam('id') ? AGNOSTIC.Util.getParam('id') : 0,
+        var template = {
+            name: $('#name').val(),
             type: $('#type').val(),
-            engine: $('#engine').va(),
-            contentGroup: $('#contentGroup').val(),
+            engine: $('#engine').val(),
             content: content,
             resources: resourcesMultiSelect ? resourcesMultiSelect.getSelected() : [],
-            objectName: 'template'
-        },function(r){
+            objectName: 'template',
+            id: AGNOSTIC.Util.getParam('id') ? AGNOSTIC.Util.getParam('id') : 0
+        };
+        AGNOSTIC.Ajax[AGNOSTIC.Util.getParam('id') ? 'put': 'post']('template', template, function(r){
             $('#info').text('Saved Successfully').css('display','block');
         });
     }

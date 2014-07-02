@@ -31,9 +31,9 @@
             alert('Unfortunately you will not be able to use Agnostic CMS in this browser. Please use a recent version of Chrome or Firefox for best results and absolutely required is a browser that supports Web Workers.');
         }
 
-        MemberOfTheWorkingForce.formatPage = function(template, view, viewGroups){
+        MemberOfTheWorkingForce.formatPage = function(templateConfig, view, viewGroups){
 
-            formatPage(template,view, viewGroups);
+            formatPage(templateConfig, view, viewGroups);
 
             function formatPage(template, view, viewGroups){
                 var page = template.content;
@@ -49,12 +49,12 @@
                 for(var i = 0; i < view.components.length; i++)
                     mergeProperty(view.components[i],'styleResources','subComponents',componentStyleResources);
 
-                page = page.replaceAll('$TEMPLATE_RESOURCES',template.resources);
-                page = page.replaceAll('$SCRIPT_COMPONENT_RESOURCES',componentScriptResources);
-                page = page.replaceAll('$STYLE_COMPONENT_RESOURCES',componentStyleResources);
+                page = page.replaceAll('%%_TEMPLATE_RESOURCES',template.resources);
+                page = page.replaceAll('%%_SCRIPT_COMPONENT_RESOURCES',componentScriptResources);
+                page = page.replaceAll('%%_STYLE_COMPONENT_RESOURCES',componentStyleResources);
                 var menuHTML = '';
                 formatMenu(viewGroups,menuHTML);
-                page = page.replaceAll('$MENU',menuHTML);
+                page = page.replaceAll('%%_MENU',menuHTML);
 
                 //self.postMessage({cmd:'formatted', page: page});
             }

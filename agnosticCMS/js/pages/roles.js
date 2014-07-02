@@ -4,7 +4,7 @@ $(function(){
         if(r.value){
             var roles = r.value;
             for(var i = 0; i < roles.length; i++){
-                $('#roles').append('<li><span>'+roles[i].name+'</span><a role=\"button\" class=\"removeButton\"><i class=\"icon-remove\"><\/i><\/a></li>');
+                $('#roles').append('<li><span>'+roles[i]+'</span><a role=\"button\" class=\"removeButton\"><i class=\"icon-remove\"><\/i><\/a></li>');
             }
             $('.removeButton').on('click',function(e){
                 e.preventDefault();

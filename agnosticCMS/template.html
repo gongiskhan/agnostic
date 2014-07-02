@@ -3,7 +3,7 @@ function heredoc(){
 <div class="alert alert-info">
     <strong>Template types:</strong><br/>
     <ul>
-        <li>layout - Choose the master template that defines the base layout of all pages. This template gets access to all the composing objects after formatted: formattedMenu, formattedComponents, formattedScriptResources, formattedStyleResources  and access to the objects before formatting: viewGroups, components, templateResources</li>
+        <li>layout - Choose the master template that defines the base layout of all pages. This template gets access to all the composing objects after formatted: formattedMenu, formattedComponents, formattedScriptResources, formattedStyleResources  and access to the objects before formatting: view, viewGroups, components, templateResources</li>
         <li>menu - The menu is based on the existing View Groups. It will be passed into the layout template after formatting as the object "formattedMenu".</li>
         <li>component - The template for all Components and sub-components. It will be passed into the layout template after formatting as the object "formattedComponents".</li>
         <li>scriptResource - The template for importing script components. It will be passed into the layout template after formatting as the object "formattedScriptResources".</li>
@@ -11,6 +11,9 @@ function heredoc(){
     </ul>
 </div>
 <div class="fieldContainer">
+    <label>Name</label>
+    <input type="text" class="input-xlarge" id="name"/>
+    <br/>
     <label for="type">Type</label>
     <select class="select" id="type">
         <option>layout</option>
@@ -19,11 +22,9 @@ function heredoc(){
         <option>scriptResource</option>
         <option>styleResource</option>
     </select>
-    <label>Content Group</label>
-    <select id="contentGroup" class="dropdown"></select>
-    <br/>
     <label for="engine">Template Engine</label>
     <select class="select" id="engine">
+        <option>AgnosticPlaceholders</option>
         <option>JavaScript</option>
         <option>KnockoutJS</option>
         <option>JsRender</option>
@@ -35,6 +36,7 @@ function heredoc(){
         <option>Jade</option>
     </select>
     <div id="engineInfo" style="font-size:0.7em;margin-bottom:1em;color:gray;line-height: 1.2em;">
+        <span id="AgnosticPlaceholdersInfo">When AgnosticPlaceholders engine is selected all you have to know is that the templates will have access to the formatted objects as %%_[composing object name] e.g. %%_formattedMenu</span>
         <span id="JavaScriptInfo">When JavaScript engine is selected there is nothing to learn if you already know the language. Just write in the template body a function render(formattedMenu, formattedComponents, formattedScriptResources, formattedStyleResources, viewGroups, components, templateResources) for the layout, render(viewGroups) for the menu template, render(components) for the component template, and render(resources) for scriptResource and styleResource templates.</span>
         <span id="KnockoutJSInfo" style="display:none;">Visit <a target="_blank" href="http://knockoutjs.com/">KnockoutJS</a> to learn how to use these templates.</span>
         <span id="JsRenderInfo" style="display:none;">Visit <a target="_blank" href="http://www.jsviews.com/">JsRender</a> to learn how to use these templates.</span>

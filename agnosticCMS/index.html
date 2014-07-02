@@ -21,6 +21,12 @@
     <!--[if IE 8 ]> <body class="ie ie8 "> <![endif]-->
     <!--[if IE 9 ]> <body class="ie ie9 "> <![endif]-->
     <!--[if (gt IE 9)|!(IE)]><!-->
+
+    <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.css">
+
+    <link rel="shortcut icon" href="images/favicon.ico" />
+</head>
+
 <body class="">
 <!--<![endif]-->
 
@@ -50,24 +56,23 @@
         <li ><a href="componentFragment.html">New Component Fragment</a></li>
     </ul>
     <a href="roles.html" class="nav-header"><i class="icon-certificate"></i>Authorization</a>
-    <a href="#resource-menu" class="nav-header collapsed submenued" data-toggle="collapse"><i class="icon-sitemap"></i>Resource <i class="icon-chevron-up"></i></a>
+    <a href="#resource-menu" class="nav-header collapsed submenued" data-toggle="collapse"><i class="icon-camera-retro"></i>Resource <i class="icon-chevron-up"></i></a>
     <ul id="resource-menu" class="nav nav-list collapse">
         <li><a href="resources.html">Resources</a></li>
         <li ><a href="resource.html">New Resource</a></li>
         <li ><a href="addResources.html">Add Resources</a></li>
     </ul>
-
-    <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.css">
-
-    <link rel="shortcut icon" href="images/favicon.ico" />
-</head>
     <a href="#template-menu" class="nav-header collapsed submenued" data-toggle="collapse"><i class="icon-list-alt"></i>Template <i class="icon-chevron-up"></i></a>
     <ul id="template-menu" class="nav nav-list collapse">
         <li><a href="templates.html">Templates</a></li>
         <li ><a href="template.html">New Template</a></li>
-        <li ><a href="templateConfig.html">Template Config</a></li>
     </ul>
-    <a href="contentGroups.html" class="nav-header"><i class="icon-cloud"></i>Content Groups</a>
+    <a href="#deliverable-menu" class="nav-header collapsed submenued" data-toggle="collapse"><i class="icon-cloud"></i>Deliverable <i class="icon-chevron-up"></i></a>
+    <ul id="deliverable-menu" class="nav nav-list collapse">
+        <li><a href="deliverables.html">Deliverables</a></li>
+        <li ><a href="deliverable.html">New Deliverable</a></li>
+    </ul>
+    <a href="deploy.html" class="nav-header"><i class="icon-download-alt"></i>Download/Deploy</a>
 </div>
 
 <div class="content">
@@ -94,6 +99,8 @@
 <script src="lib/ace/ace.js"></script>
 <script src="lib/ace/ext-language_tools.js"></script>
 <script src="lib/spin.min.js"></script>
+<script src="lib/base64.js"></script>
+<script src="lib/FileSaver.js"></script>
 <script src="lib/jszip.min.js"></script>
 <script src="js/Util.js"></script>
 <script src="js/String.js"></script>
