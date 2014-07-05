@@ -9,16 +9,16 @@ $(function () {
         scriptResourcesMultiSelect,
         styleResourcesMultiSelect,
         componentFragmentsTable,
-        subComponentsUsedTable,
+        subComponentsTable,
         configElementsTable,
         configElementModal,
         componentFragmentsModal,
-        subComponentsUsedModal;
+        subComponentsModal;
 
     function afterLoad(component, resources) {
 
         componentFragments = component ? component.componentFragments : [];
-        subComponentsUsed = component ? component.subComponentsUsed : [];
+        subComponents = component ? component.subComponents : [];
 
         componentFragmentsTable = AGNOSTIC.Table.create({
             target: '#componentFragments',
@@ -28,10 +28,10 @@ $(function () {
             isChild: true
         });
 
-        subComponentsUsedTable = AGNOSTIC.Table.create({
-            target: '#subComponentsUsed',
+        subComponentsTable = AGNOSTIC.Table.create({
+            target: '#subComponents',
             entityName: 'component',
-            data: component ? component.subComponentsUsed : [],
+            data: component ? component.subComponents : [],
             configurable: false,
             isChild: true
         });
@@ -173,34 +173,33 @@ $(function () {
                 }});
         });
     });
-
     $('.addSubComponentUsedButton').on('click', function (e) {
         e.preventDefault();
 
         AGNOSTIC.Ajax.get('component', undefined, function (components) {
-            subComponentsUsedModal = AGNOSTIC.Modal.create({target: '#modalContainer', legend: 'Sub Components', formFields: [
+            subComponentsModal = AGNOSTIC.Modal.create({target: '#modalContainer', legend: 'Sub Components', formFields: [
                 {
                     label: 'Sub Components Used',
                     text: 'Add sub-components that this component will know how to use. Actually adding components will be done on the View page.',
-                    name: 'subComponentsUsed',
+                    name: 'subComponents',
                     type: 'multiSelect',
                     unique: true,
                     availableList: components,
-                    selectedList: subComponentsUsedTable.getData(),
+                    selectedList: subComponentsTable.getData(),
                     currentItem: currentComponent
                 }
             ],
                 callback: function (object) {
                     var c, sc;
-                    for (sc in object.subComponentsUsed) {
+                    for (sc in object.subComponents) {
                         for (c in components) {
-                            if (object.subComponentsUsed[sc].id == components[c].id) {
-                                object.subComponentsUsed[sc] = components[c];
+                            if (object.subComponents[sc].id == components[c].id) {
+                                object.subComponents[sc] = components[c];
                                 break;
                             }
                         }
                     }
-                    subComponentsUsedTable.update(object.subComponentsUsed);
+                    subComponentsTable.update(object.subComponents);
                 }});
         });
     });
@@ -210,8 +209,7 @@ $(function () {
         AGNOSTIC.Ajax[AGNOSTIC.Util.getParam('id') ? 'put' : 'post']('component', {
             name: $('#name').val(),
             template: content,
-            subComponents:[],
-            subComponentsUsed: subComponentsUsedTable.getData(),
+            subComponents: subComponentsTable.getData(),
             componentFragments: componentFragmentsTable.getData(),
             componentFragmentConfigValues: componentFragmentsTable.getConfigData(),
             configElements: configElementsTable.getData(),

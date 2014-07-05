@@ -28,6 +28,7 @@ String.prototype.replaceAll = function(target, replacement) {
         PageLoader.bottomHtml = '';
 
         PageLoader.loadXMLDoc = function(url, callback){
+
             var script = document.createElement("script");
             script.type = "text/javascript";
             script.onload = function () {
@@ -48,6 +49,12 @@ String.prototype.replaceAll = function(target, replacement) {
             }
             PageLoader.loadXMLDoc(path,function(r){
                 $('#pageContent').html(r);
+
+                var currentScript = document.getElementById('pageScript');
+                if(currentScript){
+                    document.getElementsByTagName("body")[0].removeChild(currentScript);
+                }
+
                 var pageScript = document.createElement('script');
                 pageScript.setAttribute('id','pageScript');
                 pageScript.setAttribute('type','text/javascript');

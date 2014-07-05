@@ -13,7 +13,7 @@
             editor = ace.edit(textAreaId);
             editor.setOptions({enableBasicAutocompletion: true, enableSnippets: true});
             editor.setTheme("ace/theme/chrome");
-            editor.getSession().setMode("ace/mode/"+language);
+            CodeEditor.changeLanguage(language);
             editor.getSession().setTabSize(4);
             editor.getSession().on('change', function(e) {
                 onChangeCallback(editor);
@@ -28,6 +28,10 @@
                 editor.getSession().setScrollTop(pos.row * 11);
                 localStorage.setItem('pmuiCurrentCursorPosition',"");
             }
+        }
+
+        CodeEditor.changeLanguage = function(language){
+            editor.getSession().setMode("ace/mode/"+language);
         }
 
         CodeEditor.saveCursorPosition = function(){

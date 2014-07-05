@@ -46,6 +46,7 @@ public class ObjectRepository {
             object.put("id",rs.getInt(1));
             return object;
         }catch(Exception ex){
+            ex.printStackTrace();
             throw exceptionFactory.createException(ex);
         }finally{
             try {
@@ -104,6 +105,7 @@ public class ObjectRepository {
                 value.put("id",theId);
             }
         }catch(Exception ex){
+            ex.printStackTrace();
             throw exceptionFactory.createException(ex);
         } finally{
             try {
@@ -135,13 +137,37 @@ public class ObjectRepository {
                     StringWriter w = new StringWriter();
                     IOUtils.copy(in, w);
                     String clobAsString = w.toString();
-                    Map res = (Map) jsonUtil.fromJSON(clobAsString, Map.class);
-                    res.put("id",theId);
-                    value.add(res);
+                    Map val = (Map) jsonUtil.fromJSON(clobAsString, Map.class);
+                    for(Object obj : val.entrySet()){
+                        Map.Entry ent = (Map.Entry)obj;
+                        if(ent.getValue() != null && ent.getValue().getClass().isAssignableFrom(ArrayList.class)){
+                            List list = (ArrayList)ent.getValue();
+                            List newList = new ArrayList();
+                            for(Object listObj : list){
+                                if(Map.class.isAssignableFrom(listObj.getClass())){
+                                    Map mapListObj = (Map)listObj;
+                                    String listObjName = (String) mapListObj.get("objectName");
+                                    if(listObjName != null){
+                                        Map fromDB = fetch(listObjName,(int)mapListObj.get("id"));
+                                        newList.add(fromDB);
+                                    }else{
+                                        newList.add(mapListObj);
+                                    }
+                                }
+                                else{
+                                    newList.add(listObj);
+                                }
+                            }
+                            val.put(ent.getKey(), newList);
+                        }
+                    }
+                    val.put("id",theId);
+                    value.add(val);
                 }
             }
         }
         catch(Exception ex){
+            ex.printStackTrace();
             throw exceptionFactory.createException(ex);
         } finally{
             try {
@@ -168,6 +194,7 @@ public class ObjectRepository {
             object.put("id",id);
             return object;
         }catch(Exception ex){
+            ex.printStackTrace();
             throw exceptionFactory.createException(ex);
         }finally {
             try {
@@ -192,6 +219,7 @@ public class ObjectRepository {
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch(Exception ex){
+            ex.printStackTrace();
             throw exceptionFactory.createException(ex);
         }finally{
             try {
@@ -219,6 +247,7 @@ public class ObjectRepository {
             dropTablesSB.append("SET FOREIGN_KEY_CHECKS = 0;\n");
             st.executeUpdate(dropTablesSB.toString());
         } catch(Exception ex){
+            ex.printStackTrace();
             throw exceptionFactory.createException(ex);
         }finally{
             try {

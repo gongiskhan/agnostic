@@ -21,8 +21,8 @@ $(function(){
                 cmpt.configElements = cfgElems;
 
                 var cmptChildren = [];
-                for(var iternity = 0; iternity < cmpt.subComponentsUsed.length; iternity++){
-                    var cmptChild = cmpt.subComponentsUsed[iternity];
+                for(var iternity = 0; iternity < cmpt.subComponents.length; iternity++){
+                    var cmptChild = cmpt.subComponents[iternity];
                     var cmptChildCfgElems = cmptChild.configElements;
                     for(var it = 0; it < cmptChild.componentFragments.length; it++){
                         cmptChildCfgElems = cmptChildCfgElems.concat(cmptChild.componentFragments[it].configElements);
@@ -30,7 +30,7 @@ $(function(){
                     cmptChild.configElements = cmptChildCfgElems;
                     cmptChildren.push(cmptChild);
                 }
-                cmpt.subComponentsUsed = cmptChildren;
+                cmpt.subComponents = cmptChildren;
 
                 var subComponents = [];
                 for(var iternity = 0; iternity < cmpt.subComponents.length; iternity++){

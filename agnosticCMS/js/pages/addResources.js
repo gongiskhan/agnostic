@@ -70,7 +70,6 @@ $(function(){
                 AGNOSTIC.Ajax.post('resource', {
                     name: files[i].name,
                     type: files[i].type,
-                    deliverable: $('#deliverable').val(),
                     content: fileContent,
                     objectName: 'resource',
                     id: files[i].id

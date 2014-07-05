@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * Created by ggomes on 21-06-2014.
  */
-@Component
+//@Component
 public class DataBootstrap implements InitializingBean {
 
     @Autowired
@@ -26,6 +26,7 @@ public class DataBootstrap implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
+
         User user = new User();
         user.setEmail("admin@admin.com");
         user.setPassword("admin");
@@ -37,7 +38,7 @@ public class DataBootstrap implements InitializingBean {
         layoutTemplate.put("type","layout");
         layoutTemplate.put("content","CONTENT");
         layoutTemplate.put("resources",new ArrayList());
-        layoutTemplate.put("engine","AgnosticPlaceholders");
+        layoutTemplate.put("engine","Underscore");
         objectRepository.create("template",layoutTemplate);
 
         Map menuTemplate = new HashMap();
@@ -46,7 +47,7 @@ public class DataBootstrap implements InitializingBean {
         menuTemplate.put("type","menu");
         menuTemplate.put("content","CONTENT");
         menuTemplate.put("resources",new ArrayList());
-        menuTemplate.put("engine","KnockoutJS");
+        menuTemplate.put("engine","Underscore");
         objectRepository.create("template",menuTemplate);
 
         Map componentTemplate = new HashMap();
@@ -55,25 +56,25 @@ public class DataBootstrap implements InitializingBean {
         componentTemplate.put("type","component");
         componentTemplate.put("content","CONTENT");
         componentTemplate.put("resources",new ArrayList());
-        componentTemplate.put("engine","KnockoutJS");
+        componentTemplate.put("engine","Underscore");
         objectRepository.create("template",componentTemplate);
 
         Map scriptResourceTemplate = new HashMap();
         scriptResourceTemplate.put("objectName","template");
         scriptResourceTemplate.put("name","defaultScriptResourceTemplate");
         scriptResourceTemplate.put("type","scriptResource");
-        scriptResourceTemplate.put("content","<script type=\"text/javascript\" src=\"%%_resourceName\"></script>");
+        scriptResourceTemplate.put("content","<script type=\"text/javascript\" src=\"<%= resource.name %>\"></script>");
         scriptResourceTemplate.put("resources",new ArrayList());
-        scriptResourceTemplate.put("engine","AgnosticPlaceholders");
+        scriptResourceTemplate.put("engine","Underscore");
         objectRepository.create("template",scriptResourceTemplate);
 
         Map styleResourceTemplate = new HashMap();
         styleResourceTemplate.put("objectName","template");
         styleResourceTemplate.put("name","defaultStyleResourceTemplate");
         styleResourceTemplate.put("type","styleResource");
-        styleResourceTemplate.put("content","<link href=\"%%_resourceName\" type=\"text/css\" rel=\"stylesheet\"/>");
+        styleResourceTemplate.put("content","<link rel=\"stylesheet\" type=\"text/css\" href=\"<%= resource.name %>\">");
         styleResourceTemplate.put("resources",new ArrayList());
-        styleResourceTemplate.put("engine","AgnosticPlaceholders");
+        styleResourceTemplate.put("engine","Underscore");
         objectRepository.create("template",styleResourceTemplate);
 
         Map defaultDeliverable = new HashMap();

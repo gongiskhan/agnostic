@@ -7,47 +7,39 @@ $(function(){
     var content,
         currentResource = {};
 
-    function afterLoad(r, deliverables){
+    function afterLoad(r){
         if(r){
             currentResource = r;
             $('#name').val(r.name);
             $('#type').val(r.type);
-            if(r && (r.type == 'JavaScript' || r.type == 'CSS')){
+            //if(r && (r.type == 'JavaScript' || r.type == 'CSS')){
                 $('#content').val(r.content);
-            }else{
-                $('#content').val('Not Editable (Only JavaScript and CSS resource types are supported)');
-                $('#content').attr('disabled','disabled');
-            }
+            //}else{
+                //$('#content').val('Not Editable (Only JavaScript and CSS resource types are supported)');
+                //$('#content').attr('disabled','disabled');
+            //}
         }
         AGNOSTIC.CodeEditor.makeEditable('content',r ? r.type.toLowerCase() : 'javascript', function(editor){
             content = editor.getValue();
         },true);
-        if(deliverables && deliverables.length > 0);
-        for(var i = 0; i < deliverables.length; i++){
-            var deliverable = deliverables[i];
-            $('#deliverable').append('<option value="'+deliverable.name+'">'+deliverable.name+'</option>');
-        }
+        $('#type').on('change',function(e){
+            AGNOSTIC.CodeEditor.changeLanguage($(e.target).val() == 'JavaScript' ? 'javascript' : 'css');
+        });
     }
 
     if(AGNOSTIC.Util.getParam('id')){
         AGNOSTIC.Ajax.get('resource',{id: AGNOSTIC.Util.getParam('id')}, function(r){
-            AGNOSTIC.Ajax.get('deliverable',undefined, function(deliverables){
-                afterLoad(r, deliverables);
-            });
+            afterLoad(r);
         });
     }else{
-        AGNOSTIC.Ajax.get('deliverable',undefined, function(deliverables){
-            afterLoad(null, deliverables);
-        });
+        afterLoad(null);
     }
 
     function save(){
         var resource = {
             name: $('#name').val(),
             type: $('#type').val(),
-            deliverable: $('#deliverable').val(),
             content: content,
-            priority: currentResource.priority,
             objectName: 'resource',
             id: AGNOSTIC.Util.getParam('id') ? AGNOSTIC.Util.getParam('id') : 0
         };
