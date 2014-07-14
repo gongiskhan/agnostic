@@ -70,39 +70,41 @@ public class ObjectRepository {
             ps = con.prepareStatement("select id, json from " + objectName + " where id = ?;");
             ps.setInt(1, id);
             rs = ps.executeQuery();
-            rs.next();
-            Integer theId = rs.getInt(1);
-            Clob clob = rs.getClob(2);
-            if (clob != null) {
-                InputStream in = clob.getAsciiStream();
-                StringWriter w = new StringWriter();
-                IOUtils.copy(in, w);
-                String clobAsString = w.toString();
-                value = (Map) jsonUtil.fromJSON(clobAsString, Map.class);
-                for(Object obj : value.entrySet()){
-                    Map.Entry ent = (Map.Entry)obj;
-                    if(ent.getValue() != null && ent.getValue().getClass().isAssignableFrom(ArrayList.class)){
-                        List list = (ArrayList)ent.getValue();
-                        List newList = new ArrayList();
-                        for(Object listObj : list){
-                            if(Map.class.isAssignableFrom(listObj.getClass())){
-                                Map mapListObj = (Map)listObj;
-                                String listObjName = (String) mapListObj.get("objectName");
-                                if(listObjName != null){
-                                    Map fromDB = fetch(listObjName,(int)mapListObj.get("id"));
-                                    newList.add(fromDB);
-                                }else{
-                                    newList.add(mapListObj);
+            if(rs.next()){
+                Integer theId = rs.getInt(1);
+                Clob clob = rs.getClob(2);
+                if (clob != null) {
+                    InputStream in = clob.getAsciiStream();
+                    StringWriter w = new StringWriter();
+                    IOUtils.copy(in, w);
+                    String clobAsString = w.toString();
+                    value = (Map) jsonUtil.fromJSON(clobAsString, Map.class);
+                    for(Object obj : value.entrySet()){
+                        Map.Entry ent = (Map.Entry)obj;
+                        if(ent.getValue() != null && ent.getValue().getClass().isAssignableFrom(ArrayList.class)){
+                            List list = (ArrayList)ent.getValue();
+                            List newList = new ArrayList();
+                            for(Object listObj : list){
+                                if(Map.class.isAssignableFrom(listObj.getClass())){
+                                    Map mapListObj = (Map)listObj;
+                                    String listObjName = (String) mapListObj.get("objectName");
+                                    if(listObjName != null){
+                                        int idInt = mapListObj.get("id").getClass().equals(String.class) ? Integer.parseInt((String)mapListObj.get("id")) : (int)mapListObj.get("id");
+                                        Map fromDB = fetch(listObjName,idInt);
+                                        newList.add(fromDB);
+                                    }else{
+                                        newList.add(mapListObj);
+                                    }
+                                }
+                                else{
+                                    newList.add(listObj);
                                 }
                             }
-                            else{
-                                newList.add(listObj);
-                            }
+                            value.put(ent.getKey(), newList);
                         }
-                        value.put(ent.getKey(), newList);
                     }
+                    value.put("id",theId);
                 }
-                value.put("id",theId);
             }
         }catch(Exception ex){
             ex.printStackTrace();
@@ -148,8 +150,10 @@ public class ObjectRepository {
                                     Map mapListObj = (Map)listObj;
                                     String listObjName = (String) mapListObj.get("objectName");
                                     if(listObjName != null){
-                                        Map fromDB = fetch(listObjName,(int)mapListObj.get("id"));
-                                        newList.add(fromDB);
+                                        int idInt = mapListObj.get("id").getClass().equals(String.class) ? Integer.parseInt((String)mapListObj.get("id")) : (int)mapListObj.get("id");
+                                        Map fromDB = fetch(listObjName,idInt);
+                                        if (fromDB != null)
+                                            newList.add(fromDB);
                                     }else{
                                         newList.add(mapListObj);
                                     }

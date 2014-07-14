@@ -1,0 +1,43 @@
+function heredoc(){
+/*
+</div>
+</div>
+</div>
+</div>
+<script src="lib/jquery/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="lib/bootstrap/js/bootstrap.js"></script>
+<script src="lib/bootstrap-components/checkbox/js/bootstrap-checkbox.js"></script>
+<script src="lib/ace/ace.js"></script>
+<script src="lib/ace/ext-language_tools.js"></script>
+<script src="lib/spin.min.js"></script>
+<script src="lib/base64.js"></script>
+<script src="lib/FileSaver.js"></script>
+<script src="lib/jszip.min.js"></script>
+<script src="js/Util.js"></script>
+<script src="js/String.js"></script>
+<script src="js/MultiSelect.js"></script>
+<script src="js/Table.js"></script>
+<script src="js/Modal.js"></script>
+<script src="js/Ajax.js"></script>
+<script src="js/CodeEditor.js"></script>
+<script src="js/Worker.js"></script>
+<script type="text/javascript">
+    var contextPath = 'http://localhost:8700/agnostic/';
+
+    $(function(){
+        $('input[type="checkbox"]').checkbox();
+        $('.info').tooltip({
+            html:true,
+            placement:'right'
+        });
+        $('.info').hover(function(){
+            $(this).tooltip('show');
+        });
+        $('.nav-list').removeClass('in').closest('.nav-header').addClass('collapsed');
+    });
+</script>
+</body>
+</html>
+*/
+};
+window.cmsPageContent = ('\n'+heredoc.toString().match(/\/\*\s*([\s\S]*?)\s*\*\//m)[1]+'\n');

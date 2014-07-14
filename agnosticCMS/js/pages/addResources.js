@@ -2,13 +2,6 @@ $(function(){
     $('title, h1').html('Add Resources');
     var files = [],
         doneReading;
-    AGNOSTIC.Ajax.get('deliverable',undefined, function(deliverables){
-        if(deliverables && deliverables.length > 0);
-        for(var i = 0; i < deliverables.length; i++){
-            var deliverable = deliverables[0].value[i];
-            $('#deliverable').append('<option value="'+deliverable+'">'+deliverable+'</option>');
-        }
-    });
 
     $('.fileContent').change(function(e){
 

@@ -1,5 +1,7 @@
-function heredoc(){
-/*
+<script type="text/javascript" src="js/PageLoader.js" id="loadPageScript"></script>
+<script type="text/javascript">
+    function heredoc(){
+        /*
 <form id="tab">
     <label>Title</label>
     <input type="text" class="input-xlarge" id="title"/>
@@ -24,6 +26,7 @@ function heredoc(){
     <a href="#" class="btn btn-large btn-primary cloneButton pull-right" style="display:none;"><i class="icon-hdd"></i> Clone View</a><br/>
 </form>
 <div id="modalContainer"></div>
-*/
-};
-window.cmsPageContent = ('\n'+heredoc.toString().match(/\/\*\s*([\s\S]*?)\s*\*\//m)[1]+'\n');
+         */
+    };
+    AGNOSTIC.PageLoader.render('\n'+heredoc.toString().match(/\/\*\s*([\s\S]*?)\s*\*\//m)[1]+'\n');
+</script>

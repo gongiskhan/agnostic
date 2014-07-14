@@ -106,7 +106,7 @@ public class ObjectRepositoryTest extends AbstractTransactionalJUnit4SpringConte
         assertEquals(3,result.get(2).get("baz"));
     }
 
-    @Test(expected = RestException.class)
+    @Test()
     public void testDelete() throws Exception{
         Map m = new HashMap();
         m.put("name","yeah");
@@ -114,6 +114,7 @@ public class ObjectRepositoryTest extends AbstractTransactionalJUnit4SpringConte
         m.put("baz",5);
         objectRepository.create("obj", m);
         objectRepository.delete("obj",1);
-        objectRepository.fetch("obj", 1);
+        Map o = objectRepository.fetch("obj", 1);
+        assertNull(o);
     }
 }

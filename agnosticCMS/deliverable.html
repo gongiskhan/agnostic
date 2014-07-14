@@ -1,4 +1,7 @@
-function heredoc(){/*
+<script type="text/javascript" src="js/PageLoader.js" id="loadPageScript"></script>
+<script type="text/javascript">
+    function heredoc(){
+        /*
 <form id="tab">
     <label>Name</label>
     <input type="text" class="input-xlarge" id="name"/>
@@ -16,6 +19,7 @@ function heredoc(){/*
     <a href="#" class="btn btn-large btn-primary saveButton"><i class="icon-hdd"></i> Save</a><br/>
 </form>
 <div id="modalContainer"></div>
-*/
-};
-window.cmsPageContent = ('\n'+heredoc.toString().match(/\/\*\s*([\s\S]*?)\s*\*\//m)[1]+'\n');
+         */
+    };
+    AGNOSTIC.PageLoader.render('\n'+heredoc.toString().match(/\/\*\s*([\s\S]*?)\s*\*\//m)[1]+'\n');
+</script>

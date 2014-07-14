@@ -62,7 +62,7 @@ $(function(){
         AGNOSTIC.Ajax.get('resource',undefined, function(r){
             var pageResources = [];
             for(var i = 0; i < r.length; i++){
-                if(r[i].type == 'CSS' || r[i].type == 'JavaScript' || r[i].name.indexOf('.css') != -1|| r[i].name.indexOf('.js') != -1){
+                if(r[i].type == 'CSS' || r[i].type == 'JavaScript' || r[i].name.indexOf('.css') != -1 || r[i].name.indexOf('.js') != -1){
                     pageResources.push(r[i]);
                 }
             }
@@ -101,6 +101,7 @@ $(function(){
         $('#type').on('change',function(e) {
             updateContent();
         });
+        updateContent();
     }
 
     if(AGNOSTIC.Util.getParam('id')){
@@ -124,6 +125,9 @@ $(function(){
             objectName: 'template',
             id: AGNOSTIC.Util.getParam('id') ? AGNOSTIC.Util.getParam('id') : 0
         };
+        for(var i = 0; i < template.resources.length; i++){
+            template.resources[i].objectName = 'resource';
+        }
         console.debug(template);
         AGNOSTIC.Ajax[AGNOSTIC.Util.getParam('id') ? 'put': 'post']('template', template, function(r){
             $('#info').text('Saved Successfully').css('display','block');

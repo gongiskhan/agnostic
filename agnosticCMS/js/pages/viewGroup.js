@@ -71,7 +71,7 @@ $(function(){
         console.log('Saving View Group.');
         AGNOSTIC.Ajax.post('viewGroup', {
             name: $('#name').val(),
-            deliverables: $('#deliverables').val(),
+            deliverable: $('#deliverable').val(),
             views: viewsSelect.getSelected(),
             roles: rolesSelect.getSelected(),
             viewGroups: viewGroupsSelect.getSelected(),

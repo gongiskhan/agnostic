@@ -26,7 +26,7 @@
         });
 
         if(typeof(Worker) !== "undefined") {
-            console.debug('Browser supports Web Workers! Cool as a cool thing can be!');
+            console.debug('Browser supports Web Workers. That\'s cool as a cool thing can be!');
         } else {
             alert('Unfortunately you will not be able to use Agnostic CMS in this browser. Please use a recent version of Chrome or Firefox for best results and absolutely required is a browser that supports Web Workers.');
         }
