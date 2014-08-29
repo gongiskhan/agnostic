@@ -3,13 +3,17 @@
     function heredoc(){
         /*
 <form id="tab">
-    <label>Name</label>
-    <input type="text" class="input-xlarge" id="name"/>
-    <label>Type</label>
-    <select class="select" id="type">
-        <option>JavaScript</option>
-        <option>CSS</option>
-    </select>
+    <div class="form-group">
+        <label>Name</label>
+        <input class="form-control" id="name" type="text">
+    </div>
+    <div class="form-group">
+        <label>Deliverable</label>
+        <select class="form-control dropdown" id="type">
+            <option>JavaScript</option>
+            <option>CSS</option>
+        </select>
+    </div>
     <fieldset class="fieldset">
         <legend class="legend">Config Elements <span class="badge info" title="These are the configuration elements that will appear on the configuration dialog for this Component Fragment when configuring a Component. e.g. if you create an element Fields with type Table[Field:Validate] you will have a table with 2 columns Field and Validate on the configuration screen.">i</span></legend>
         <a href="#" class="btn btn-block btn-primary addConfigElementButton"><i class="icon-plus-sign"></i> Add</a>
@@ -24,7 +28,6 @@
     <br/>
     <a href="#" class="btn btn-large btn-primary saveButton"><i class="icon-hdd"></i> Save</a><br/>
 </form>
-<div id="modalContainer"></div>
          */
     };
     AGNOSTIC.PageLoader.render('\n'+heredoc.toString().match(/\/\*\s*([\s\S]*?)\s*\*\//m)[1]+'\n');

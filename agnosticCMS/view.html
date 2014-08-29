@@ -2,17 +2,23 @@
 <script type="text/javascript">
     function heredoc(){
         /*
-<form id="tab">
-    <label>Title</label>
-    <input type="text" class="input-xlarge" id="title"/>
-    <br/>
-    <label>Name</label>
-    <input type="text" class="input-xlarge" id="name"/>
-    <br/>
-    <label>Deliverable</label>
-    <select id="deliverable" class="dropdown"></select>
-    <br/>
-    <label class="inline">Full Body <input type="checkbox" class="checkbox inline" id="fullBody"/></label>
+<form id="tab" role="form">
+    <div class="form-group">
+        <label>Title</label>
+        <input class="form-control" id="title" type="text">
+    </div>
+    <div class="form-group">
+        <label>Name</label>
+        <input class="form-control" id="name" type="text">
+    </div>
+    <div class="form-group">
+        <label>Deliverable</label>
+        <select class="form-control dropdown" id="deliverable"></select>
+    </div>
+    <div class="form-group">
+        <label style="display:inline-block;">Full Body</label>
+         <input type="checkbox" class="checkbox" style="display:inline-block;" id="fullBody"/>
+    </div>
     <fieldset class="fieldset">
         <legend class="legend">Components <span class="badge info" title="These are the configuration elements that will appear on the configuration dialog for this Component Fragment when configuring a Component. e.g. if you create an element Fields with type Table[Field:Validate] you will have a table with 2 columns Field and Validate on the configuration screen.">i</span></legend>
         <a href="#" class="btn btn-block btn-primary addComponentButton"><i class="icon-plus-sign"></i> Add</a>
@@ -23,9 +29,10 @@
     <fieldset class="dragDropArea" id="rolesMultiSelect"></fieldset>
     <br/><br/><br/>
     <a href="#" class="btn btn-large btn-primary saveButton"><i class="icon-hdd"></i> Save</a>
-    <a href="#" class="btn btn-large btn-primary cloneButton pull-right" style="display:none;"><i class="icon-hdd"></i> Clone View</a><br/>
+    <a href="#" class="btn btn-large btn-primary previewButton"><i class="icon-eye-open"></i> Preview</a>
+    <a href="#" class="btn btn-large btn-primary cloneButton inline" style="display:none;"><i class="icon-hdd"></i> Clone View</a>
+    <br/><br/>
 </form>
-<div id="modalContainer"></div>
          */
     };
     AGNOSTIC.PageLoader.render('\n'+heredoc.toString().match(/\/\*\s*([\s\S]*?)\s*\*\//m)[1]+'\n');

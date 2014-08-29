@@ -76,6 +76,18 @@ public class APIDocsConfig {
         return apiInfo;
     }
 
+//    private ApiInfo apiInfo() {
+//        ApiInfo apiInfo = new ApiInfo(
+//                "Group Manager 1.0 API",
+//                "REST webservice for CRUD operations relating Groups and Group Members.",
+//                "http://en.wikipedia.org/wiki/Terms_of_service",
+//                "support@tangotelecom.com",
+//                "Apache 2.0",
+//                "http://www.apache.org/licenses/LICENSE-2.0.html"
+//        );
+//        return apiInfo;
+//    }
+
     /**
      * Configure a SwaggerApiResourceListing for each swagger instance within your app. e.g. 1. private  2. external apis
      * Required to be a spring bean as spring will call the postConstruct method to bootstrap swagger scanning.

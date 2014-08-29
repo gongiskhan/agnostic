@@ -2,12 +2,11 @@
 <script type="text/javascript">
     function heredoc(){
         /*
+<label>Active Deliverable</label>
+<select class="select" id="deliverable"></select><br/><br/>
 <a href="deliverable.html" class="btn btn-block btn-primary newEntityButton"><i class="icon-plus-sign"></i> New</a>
 <br/>
-<input type="text" class="input-xlarge" id="searchContent"/>
-<a href="#" class="btn btn-primary" id="searchContentButton" style="vertical-align: top;"><i class="icon-search"></i> Search Contents</a>
 <div class="well" id="deliverables"></div>
-<div id="modalContainer"></div>
          */
     };
     AGNOSTIC.PageLoader.render('\n'+heredoc.toString().match(/\/\*\s*([\s\S]*?)\s*\*\//m)[1]+'\n');

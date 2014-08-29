@@ -60,7 +60,8 @@ $.fn.modal.Constructor.prototype.enforceFocus = function(){
                 createMultiSelects.call(this);
                 createTables.call(this);
                 attachListeners.call(this);
-
+                $(self.opts.target).find(this.opts.target+"_modal").css('position','relative');
+                $(self.opts.target).find(this.opts.target+"_modal").modal();
                 $(self.opts.target).find(this.opts.target+"_modal").modal('show');
 
                 return this;
@@ -68,7 +69,7 @@ $.fn.modal.Constructor.prototype.enforceFocus = function(){
 
             buildHTML = function(){
                 var html = "";
-                html += "<div id=\""+(this.opts.target.replace('#','')+"_modal")+"\" class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"modalLabel\" aria-hidden=\"false\">";
+                html += "<div id=\""+(this.opts.target.replace('#','')+"_modal")+"\" class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"modalLabel\" aria-hidden=\"false\" >";
                 html += "    <div class=\"modal-header\">";
                 html += "        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;<\/button>";
                 html += "        <h3 id=\"modalLabel\">"+this.opts.legend+"<span class=\"badge info\" title=\""+this.opts.info+"\">i</span><\/h3>";
@@ -81,11 +82,16 @@ $.fn.modal.Constructor.prototype.enforceFocus = function(){
                     for(var i = 0; i < this.opts.formFields.length; i++){
                         var formField = this.opts.formFields[i];
                         if(formField.type == 'text'){
-                            html += "        <label>"+formField.label+"<\/label>";
-                            html += "        <input type=\"text\" class=\"input-xlarge\" value=\""+(formField.value || "")+"\" id=\""+formField.name+"\"\/>";
+
+                            html += '<div class="form-group">';
+                            html += '    <label>'+formField.label+'</label>';
+                            html += '    <input class="form-control" type="text" value="'+(formField.value || "")+'" id="'+formField.name+'"\/>';
+                            html += '</div>';
                         }else if(formField.type == 'select'){
-                            html += "        <label>"+formField.label+"<\/label>";
-                            html += "        <select class=\"select\" id=\""+formField.name+"\" value=\""+(formField.value || "")+"\">";
+
+                            html += '<div class="form-group">';
+                            html += '    <label>'+formField.label+'</label>';
+                            html += '    <select class="form-control select" id="'+formField.name+'" value="'+(formField.value || "")+'">';
                             for(var it = 0; it < formField.options.length; it++){
                                 html += "<option";
                                 if(formField.options[it] == formField.value)
@@ -95,7 +101,8 @@ $.fn.modal.Constructor.prototype.enforceFocus = function(){
                                 html += formField.options[it];
                                 html += "<\/option>";
                             }
-                            html += "        <\/select>";
+                            html += '    </select>';
+                            html += '</div>';
                         }else if(formField.type == 'list'){
                             html += "        <div class=\"listContainer\">";
                             html += "            <label>"+formField.label+"<\/label>";
@@ -162,7 +169,7 @@ $.fn.modal.Constructor.prototype.enforceFocus = function(){
                 return html;
             },
             adjustDimensionsToTable = function(){
-
+/*
                 var self = this;
                 //adjust to cope with tables in modals.
                 if($(self.opts.target).find('[id$=Table]').width() > 300){
@@ -182,6 +189,7 @@ $.fn.modal.Constructor.prototype.enforceFocus = function(){
                         'max-width': '90%'
                     });
                 }
+                */
             },
             attachListeners = function(){
 

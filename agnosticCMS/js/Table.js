@@ -39,6 +39,7 @@
                     self.opts.data = data || self.opts.data;
                     $(self.opts.target).html('');
                     $(self.opts.target).html(buildHTML.call(self));
+                    //$('input[type="checkbox"]').checkbox();
                     attachListeners.call(self);
                 }
                 this.updateConfigData = function(newConfigData){
@@ -73,8 +74,8 @@
                 var html="";
                 if(this.opts.data && this.opts.data.length > 0){
                     var h, o, r, c;
-                    html += "<a href=\"#\" class=\"button pull-right btn-primary btn-small selectAll\">Select All<\/a>";
-                    html += "<a href=\"#\" class=\"button pull-right btn-primary btn-small removeSelected\">Remove Selected<\/a>";
+                    html += '<button type="button" class="btn btn-primary btn-xs pull-right selectAll">Select All</button>';
+                    html += '<button type="button" class="btn btn-primary btn-xs pull-right removeSelected">Remove Selected</button>';
                     html += "    <table class=\"table\" id=\""+this.opts.target+"Table\">";
                     html += "        <thead>";
                     html += "        <tr>";
@@ -107,13 +108,13 @@
                                 html += "<td>"+this.opts.data[r][o]+"<\/td>";
                             }
                         }
-                        html += "    <td>";
+                        html += '    <td style="padding:0.5em 0 0 0;">';
                         if(this.opts.editable)
-                            html += "    <a href=\""+this.opts.entityName+".html?id="+this.opts.data[r].id+"\" class=\"editButton\"><i class=\"icon-pencil\"><\/i><\/a>&nbsp;&nbsp;&nbsp;";
+                            html += "    <a href=\""+this.opts.entityName+".html?id="+this.opts.data[r].id+"\" class=\"editButton\"><i class=\"fa fa-pencil\"><\/i><\/a>&nbsp;&nbsp;&nbsp;";
                         if(this.opts.configurable)
-                            html += "    <a href=\""+count+"\" class=\"configureButton\" id=\"configure_"+this.opts.data[r].id+"\"><i class=\"icon-cog\"><\/i><\/a>&nbsp;&nbsp;&nbsp;";
-                        html += "        <input type=\"checkbox\" style=\"vertical-align:top;margin-right:0.2em;\"\/>";
-                        html += "        <a role=\"button\" data-toggle=\"modal\" class=\"removeButton\" id=\"delete_"+this.opts.data[r].id+"\"><i class=\"icon-remove\"><\/i><\/a>";
+                            html += "    <a href=\""+count+"\" class=\"configureButton\" id=\"configure_"+this.opts.data[r].id+"\"><i class=\"fa fa-cogs\"><\/i><\/a>&nbsp;&nbsp;&nbsp;";
+                        html += "        <a role=\"button\" data-toggle=\"modal\" class=\"removeButton\" id=\"delete_"+this.opts.data[r].id+"\"><i class=\"fa fa-times\"><\/i><\/a>";
+                        html += "        <input type=\"checkbox\" style=\"vertical-align:top;margin-left:4px;\"\/>";
                         html += "    <\/td>";
                         html += "<\/tr>";
                         if(this.opts.configurable){
@@ -254,7 +255,7 @@
                 AGNOSTIC.Modal.create({
                     target:'#modalContainer',
                     legend:'Confirm Delete',
-                    text:'Are yor sure you want to delete '+itemIds.length+' items?',
+                    text:'Are you sure you want to delete '+itemIds.length+' items?',
                     callback:function(){
                         for(var i = 0; i < itemIds.length; i++){
 

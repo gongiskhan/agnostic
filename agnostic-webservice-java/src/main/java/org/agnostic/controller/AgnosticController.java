@@ -2,6 +2,7 @@ package org.agnostic.controller;
 
 import org.agnostic.error.RestException;
 import org.agnostic.persistence.ObjectRepository;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -51,9 +52,14 @@ public class AgnosticController {
     }
 
     @RequestMapping(value = {"/{objectName}"}, params = {"id"}, method = RequestMethod.GET)
-    public ResponseEntity get(@PathVariable("objectName") String objectName, @RequestParam Integer id) throws Exception{
+    public ResponseEntity get(@PathVariable("objectName") String objectName, @RequestParam Integer id, @RequestParam(required = false) String property) throws Exception{
         try{
-            return new ResponseEntity<Map>(repository.fetch(objectName, id), HttpStatus.OK);
+            Map object = repository.fetch(objectName, id);
+            if(property != null && !property.isEmpty()){
+                return new ResponseEntity<Object>(PropertyUtils.getProperty(object,property), HttpStatus.OK);
+            }else{
+                return new ResponseEntity<Map>(object, HttpStatus.OK);
+            }
         }catch (RestException rex){
             return new ResponseEntity<RestException>(rex, HttpStatus.valueOf(rex.getErrorCode().getValue()));
         }

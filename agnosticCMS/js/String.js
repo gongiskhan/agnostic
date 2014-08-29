@@ -1,6 +1,13 @@
-String.prototype.replaceAll = function(target, replacement) {
-    return this.split(target).join(replacement);
-};
+if ( !String.prototype.replaceAll ) {
+    String.prototype.replaceAll = function (target, replacement) {
+        return this.split(target).join(replacement);
+    };
+}
+if ( !String.prototype.contains ) {
+    String.prototype.contains = function() {
+        return String.prototype.indexOf.apply( this, arguments ) !== -1;
+    };
+}
 (function(AGNOSTIC, undefined){
     (function(String, undefined){
 

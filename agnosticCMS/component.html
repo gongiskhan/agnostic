@@ -2,9 +2,11 @@
 <script type="text/javascript">
     function heredoc(){
         /*
-<form id="tab">
-    <label>Name</label>
-    <input type="text" class="input-xlarge" id="name"/>
+<form id="tab" role="form">
+    <div class="form-group">
+        <label>Name</label>
+        <input class="form-control" id="name" type="text">
+    </div>
     <fieldset class="fieldset">
         <legend class="legend">Sub-Components<span class="badge info" title="TODO: info here.">i</span>
         </legend>
@@ -39,7 +41,6 @@
     <br/><br/><br/><br/>
     <a href="#" class="btn btn-large btn-primary saveButton"><i class="icon-hdd"></i> Save</a><br/>
 </form>
-<div id="modalContainer"></div>
          */
     };
     AGNOSTIC.PageLoader.render('\n'+heredoc.toString().match(/\/\*\s*([\s\S]*?)\s*\*\//m)[1]+'\n');

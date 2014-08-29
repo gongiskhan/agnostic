@@ -62,9 +62,9 @@ $(function(){
         AGNOSTIC.Ajax.get('resource',undefined, function(r){
             var pageResources = [];
             for(var i = 0; i < r.length; i++){
-                if(r[i].type == 'CSS' || r[i].type == 'JavaScript' || r[i].name.indexOf('.css') != -1 || r[i].name.indexOf('.js') != -1){
+                //if(r[i].type == 'CSS' || r[i].type == 'JavaScript' || r[i].name.indexOf('.css') != -1 || r[i].name.indexOf('.js') != -1){
                     pageResources.push(r[i]);
-                }
+                //}
             }
             resourcesMultiSelect = AGNOSTIC.MultiSelect.create({
                 target: '#resourcesMultiSelect',

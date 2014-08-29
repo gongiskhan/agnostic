@@ -113,3 +113,23 @@ td.details div .label{
 .itemConfigRow td:first-child, .configTogglerCell{
     width:3%;
 }
+
+.selectAll{
+    margin-right: 1em;
+    left: 1em;
+    width: 6em;
+    position: relative;
+    margin-bottom: 2em;
+}
+
+form[role=form]{
+    padding:0 1.5em 0 1.5em;
+}
+
+form[role=form] input.checkbox{
+    position:relative;
+    top:0.2em;
+    width: 2em;
+}
+
+div.modal {background-color: white; opacity:1;}

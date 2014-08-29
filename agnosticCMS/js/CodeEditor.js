@@ -6,14 +6,14 @@
         CodeEditor.makeEditable = function(textAreaId, language, onChangeCallback, bigger){
 
             $('#'+textAreaId).css({
-                height: bigger ? '60em' : '25em',
+                height: bigger ? '40em' : '25em',
                 width: '100%'
             });
             ace.require("ace/ext/language_tools");
             editor = ace.edit(textAreaId);
             editor.setOptions({enableBasicAutocompletion: true, enableSnippets: true});
             editor.setTheme("ace/theme/chrome");
-            CodeEditor.changeLanguage(language);
+            editor.getSession().setMode("ace/mode/"+language);
             editor.getSession().setTabSize(4);
             editor.getSession().on('change', function(e) {
                 onChangeCallback(editor);

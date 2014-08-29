@@ -2,13 +2,15 @@
 <script type="text/javascript">
     function heredoc(){
         /*
-<form id="tab">
-    <label>Name</label>
-    <input type="text" class="input-xlarge" id="name"/>
-    <br/>
-    <label>Deliverable</label>
-    <select id="deliverable" class="dropdown"></select>
-    <br/><br/>
+<form id="tab" role="form">
+    <div class="form-group">
+        <label>Name</label>
+        <input class="form-control" id="name" type="text">
+    </div>
+    <div class="form-group">
+        <label>Deliverable</label>
+         <select class="form-control dropdown" id="deliverable"></select>
+    </div>
     <fieldset class="dragDropArea" id="viewGroupsMultiSelect"></fieldset>
     <br/><br/>
     <fieldset class="dragDropArea" id="viewsMultiSelect"></fieldset>
@@ -17,7 +19,6 @@
     <br/><br/><br/>
     <a href="#" class="btn btn-large btn-primary saveButton"><i class="icon-hdd"></i> Save</a><br/>
 </form>
-<div id="modalContainer"></div>
          */
     };
     AGNOSTIC.PageLoader.render('\n'+heredoc.toString().match(/\/\*\s*([\s\S]*?)\s*\*\//m)[1]+'\n');

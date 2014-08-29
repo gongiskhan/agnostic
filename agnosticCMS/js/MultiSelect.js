@@ -22,6 +22,7 @@
                 var self = this;
 
                 this.opts = {
+                    entityName: options.entityName,
                     legend: options.legend || 'Choose',
                     data: {
                         availableList: options.data ? options.data.availableList || [] : [],
@@ -57,9 +58,10 @@
                  * @returns {Array} Array of objects with an id and a name.
                  */
                 this.getSelected = function(){
-                    var selected = [];
+                    var selected = [],
+                        self = this;
                     $(this.opts.target).find('.selected li').each(function(it, el){
-                        selected.push({id: $(el).find('span.label').attr('id')});
+                        selected.push({id: $(el).find('span.label').attr('id'), objectName: self.opts.entityName});
                     });
                     return selected;
                 }
@@ -76,7 +78,7 @@
                 html += "    <ul class=\"blocks-list dragArea available\">";
                 if(this.opts.data.availableList)
                     for(var i = 0; i < this.opts.data.availableList.length; i++){
-                        if( ( !this.opts.data.currentItem || this.opts.data.currentItem.name != this.opts.data.availableList[i].name )  && (!this.opts.unique || !AGNOSTIC.Util.arrayContains(this.opts.data.selectedList, 'id', this.opts.data.availableList[i].id)) )
+                        if( ( !this.opts.data.currentItem || this.opts.data.currentItem.name != this.opts.data.availableList[i].name )  && (!this.opts.unique || (  this.opts.data.selectedList && !AGNOSTIC.Util.arrayContains(this.opts.data.selectedList, 'id', this.opts.data.availableList[i].id)) ) )
                             html += buildAvailableItemHTML.call(this, this.opts.data.availableList[i]);
                     }
                 html += "    <\/ul>";
@@ -86,6 +88,7 @@
                 html += "    <ul class=\"list dropArea selected\">";
                 if(this.opts.data.selectedList)
                     for(var i = 0; i < this.opts.data.selectedList.length; i++){
+                        if(this.opts.data.selectedList[i])
                         html += buildSelectedItemHTML.call(this, this.opts.data.selectedList[i]);
                     }
                 html += "    <\/ul>";
@@ -120,8 +123,10 @@
                         dropped = true;
                         var item = {
                             id: ui.draggable.find('span').attr('id'),
-                            name: ui.draggable.find('span').text()
+                            name: ui.draggable.find('span').text(),
+                            objectName: self.opts.entityName
                         }
+                        if(item)
                         $(self.opts.target).find('.selected').append(buildSelectedItemHTML.call(this, item)).fadeIn();
                         if(self.opts.unique)
                             ui.draggable.remove();

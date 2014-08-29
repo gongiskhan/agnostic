@@ -45,7 +45,7 @@
             var b = false;
             if(array)
             for(var i = 0, len = array.length; i < len; i++)
-                if((prop && array[i][prop] == value) || array[i] == value)
+                if((prop && array[i] && array[i][prop] == value) || array[i] == value)
                     b=true;
             return b;
         }

@@ -4,11 +4,12 @@ function heredoc(){
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>agnosticCMS</title>
-    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+
+    <title>agnosticCMS</title>
 
     <script src="lib/jquery/jquery-1.10.2.js" type="text/javascript"></script>
     <script src="lib/jquery/scrollTo.js" type="text/javascript"></script>
@@ -16,77 +17,107 @@ function heredoc(){
     <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="lib/bootstrap-components/checkbox/css/bootstrap-checkbox.css">
 
+    <link href="css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <link href="css/plugins/timeline.css" rel="stylesheet">
+
     <link rel="stylesheet" type="text/css" href="css/theme.css">
     <link rel="stylesheet" type="text/css" href="css/agnostic.css">
-    <!--[if lt IE 7 ]> <body class="ie ie6"> <![endif]-->
-    <!--[if IE 7 ]> <body class="ie ie7 "> <![endif]-->
-    <!--[if IE 8 ]> <body class="ie ie8 "> <![endif]-->
-    <!--[if IE 9 ]> <body class="ie ie9 "> <![endif]-->
-    <!--[if (gt IE 9)|!(IE)]><!-->
 
-    <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.css">
+    <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <link rel="shortcut icon" href="images/favicon.ico" />
+
 </head>
 
 <body class="">
-<!--<![endif]-->
 
-<div class="navbar">
-    <div class="navbar-inner">
-        <ul class="nav pull-right">
+<div id="wrapper">
 
-        </ul>
-        <a class="brand" href="index.html">agnosticCMS</a>
-    </div>
-</div>
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html"><i class="fa fa-recycle"></i> <span style="position:relative; bottom: 0.1em;">agnosticCMS</span></a>
+        </div>
+        <!-- /.navbar-header -->
 
-<div class="sidebar-nav">
-    <a href="#dashboard-menu" class="nav-header collapsed submenued" data-toggle="collapse"><i class="icon-file"></i>View <i class="icon-chevron-up"></i></a>
-    <ul id="dashboard-menu" class="nav nav-list collapse">
-        <li ><a href="index.html">Views</a></li>
-        <li ><a href="view.html">New View</a></li>
-        <li><a href="viewGroups.html">View Groups</a></li>
-        <li ><a href="viewGroup.html">New View Group</a></li>
-    </ul>
-    <a href="#component-menu" class="nav-header collapsed submenued" data-toggle="collapse"><i class="icon-sitemap"></i>Component <i class="icon-chevron-up"></i></a>
-    <ul id="component-menu" class="nav nav-list collapse">
-        <li><a href="components.html">Components</a></li>
-        <li ><a href="component.html">New Component</a></li>
-        <li ><a href="componentFragments.html">Component Fragments</a></li>
-        <li ><a href="componentFragment.html">New Component Fragment</a></li>
-    </ul>
-    <a href="roles.html" class="nav-header"><i class="icon-certificate"></i>Authorization</a>
-    <a href="#resource-menu" class="nav-header collapsed submenued" data-toggle="collapse"><i class="icon-camera-retro"></i>Resource <i class="icon-chevron-up"></i></a>
-    <ul id="resource-menu" class="nav nav-list collapse">
-        <li><a href="resources.html">Resources</a></li>
-        <li ><a href="resource.html">New Resource</a></li>
-        <li ><a href="addResources.html">Add Resources</a></li>
-    </ul>
-    <a href="#template-menu" class="nav-header collapsed submenued" data-toggle="collapse"><i class="icon-list-alt"></i>Template <i class="icon-chevron-up"></i></a>
-    <ul id="template-menu" class="nav nav-list collapse">
-        <li><a href="templates.html">Templates</a></li>
-        <li ><a href="template.html">New Template</a></li>
-    </ul>
-    <a href="#deliverable-menu" class="nav-header collapsed submenued" data-toggle="collapse"><i class="icon-cloud"></i>Deliverable <i class="icon-chevron-up"></i></a>
-    <ul id="deliverable-menu" class="nav nav-list collapse">
-        <li><a href="deliverables.html">Deliverables</a></li>
-        <li ><a href="deliverable.html">New Deliverable</a></li>
-    </ul>
-    <a href="deploy.html" class="nav-header"><i class="icon-download-alt"></i>Download/Deploy</a>
-</div>
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav navbar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li>
+                        <a href="#" class="submenued"><i class="fa fa-file-o fa-fw"></i> View<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li ><a href="index.html"><i class="fa fa-angle-right fa-fw"></i>Views</a></li>
+                            <li ><a href="view.html"><i class="fa fa-angle-right fa-fw"></i>New View</a></li>
+                            <li><a href="viewGroups.html"><i class="fa fa-angle-right fa-fw"></i>View Groups</a></li>
+                            <li ><a href="viewGroup.html"><i class="fa fa-angle-right fa-fw"></i>New View Group</a></li>
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
+                    <li>
+                        <a href="#" class="submenued"><i class="fa fa-sitemap fa-fw"></i> Component<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="components.html"><i class="fa fa-angle-right fa-fw"></i>Components</a></li>
+                            <li ><a href="component.html"><i class="fa fa-angle-right fa-fw"></i>New Component</a></li>
+                            <li ><a href="componentFragments.html"><i class="fa fa-angle-right fa-fw"></i>Component Fragments</a></li>
+                            <li ><a href="componentFragment.html"><i class="fa fa-angle-right fa-fw"></i>New Component Fragment</a></li>
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
+                    <li>
+                        <a href="roles.html"><i class="fa fa-certificate fa-fw"></i> Authorization</a>
+                    </li>
+                    <li>
+                        <a href="#" class="submenued"><i class="fa fa-camera-retro fa-fw"></i> Resource<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="resources.html"><i class="fa fa-angle-right fa-fw"></i>Resources</a></li>
+                            <li ><a href="resource.html"><i class="fa fa-angle-right fa-fw"></i>New Resource</a></li>
+                            <li ><a href="addResources.html"><i class="fa fa-angle-right fa-fw"></i>Add Resources</a></li>
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
+                    <li>
+                        <a href="#" class="submenued"><i class="fa fa-list-alt fa-fw"></i> Template<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="templates.html"><i class="fa fa-angle-right fa-fw"></i>Templates</a></li>
+                            <li ><a href="template.html"><i class="fa fa-angle-right fa-fw"></i>New Template</a></li>
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
+                    <li>
+                        <a href="#" class="submenued"><i class="fa fa-cloud fa-fw"></i> Deliverable<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="deliverables.html"><i class="fa fa-angle-right fa-fw"></i>Deliverables</a></li>
+                            <li ><a href="deliverable.html"><i class="fa fa-angle-right fa-fw"></i>New Deliverable</a></li>
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
+                    <li>
+                        <a href="deploy.html"><i class="fa fa-cloud-upload fa-fw"></i> Download/Deploy</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.sidebar-collapse -->
+        </div>
+        <!-- /.navbar-static-side -->
+    </nav>
+    <div id="modalContainer" style="margin-left:1.5em;"></div>
+    <div id="page-wrapper">
 
-<div class="content">
-
-    <div class="header">
-        <h1 class="page-title">Views</h1>
-    </div>
-
-    <div class="container-fluid">
-        <div class="row-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Views</h1>
+            </div>
+        </div>
+        <div class="row">
+            <!-- /.col-lg-12 -->
             <div class="alert alert-success" id="info" style="display:none;"></div>
             <div class="alert alert-error" id="error" style="display:none;"></div>
-            <div class="row-fluid" id="pageContent">
+
 */
 };
 window.cmsPageContent = ('\n'+heredoc.toString().match(/\/\*\s*([\s\S]*?)\s*\*\//m)[1]+'\n');

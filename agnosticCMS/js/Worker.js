@@ -62,7 +62,7 @@
                 if(!result)
                     result = [];
                 for(var i = 0; i < object[property].length; i++){
-                    if(!AGNOSTIC.Util.arrayContains(result, 'id', object[property][i].id)){
+                    if(result && !AGNOSTIC.Util.arrayContains(result, 'id', object[property][i].id)){
                         result.push(object[property][i]);
                     }
                 }

@@ -34,17 +34,18 @@ $(function(){
 
                 var fileExt = e.target.files[i].name.substring(e.target.files[i].name.lastIndexOf('.')+1, e.target.files[i].name.length),
                     fileName = e.target.files[i].webkitRelativePath && e.target.files[i].webkitRelativePath != '' ? e.target.files[i].webkitRelativePath : e.target.files[i].name;
-
+//console.debug(fileName);
                 //Leave only the last folder in the path so that resources can be picked up appropriately by the reader (and ensure that references from e.g. CSS files such as img/image1.png still work).
-                if(fileName.split('/').length > 2)
-                    fileName = fileName.substring(fileName.lastIndexOf('/',fileName.lastIndexOf('/')-1)+1);
-                else if(fileName.split('/').length > 1)
-                    fileName = fileName.substring(fileName.lastIndexOf('/')+1);
+                //var bars = fileName.split('/');
+                //if(bars.length > 2)
+                    //fileName = fileName.substring(fileName.lastIndexOf('/',fileName.lastIndexOf('/')-1)+1);
+                //else if(bars.length > 1)
+                    //fileName = fileName.substring(fileName.lastIndexOf('/')+1);
 
                 files.push({
                     id: 0,
                     name: fileName,
-                    type: fileExt == 'js' ? 'JavaScript' : fileExt == 'css' ? 'CSS' : 'Unknown'
+                    type: fileExt == 'js' ? 'JavaScript' : fileExt == 'css' ? 'CSS' : (fileExt == 'jpg' || fileExt == 'jpeg' || fileExt == 'bmp' || fileExt == 'png' || fileExt == 'gif' || fileExt == 'tif' || fileExt == 'tiff' || fileExt == 'svg') ? 'Image' : 'Other'
                 });
                 if(e.target.files[i].type.match('text*')){
                     readers[readers.length-1].readAsText(e.target.files[i]);
@@ -57,19 +58,24 @@ $(function(){
 
     function save(){
         if(doneReading){
-            for(var i = 0; i < files.length; i++){
-                var fileContent = files[i].content;
-                console.debug(fileContent);
-                AGNOSTIC.Ajax.post('resource', {
-                    name: files[i].name,
-                    type: files[i].type,
-                    content: fileContent,
-                    objectName: 'resource',
-                    id: files[i].id
-                },i < (files.length-1) ? function(){} : function(){
-                    AGNOSTIC.PageLoader.render('resources.html');
-                });
-            }
+            var i = 0;
+            var inter = setInterval(function(){
+                if(i < files.length){
+                    var fileContent = files[i].content;
+                    AGNOSTIC.Ajax.post('resource', {
+                        name: files[i].name,
+                        type: files[i].type,
+                        content: fileContent,
+                        objectName: 'resource',
+                        id: files[i].id
+                    },i < (files.length-1) ? function(){} : function(){
+                        window.location.href='resources.html';
+                    });
+                    i++;
+                }else{
+                    clearInterval(inter);
+                }
+            },500);
         }else{
             alert('File(s) not loaded yet. Try again.');
         }
