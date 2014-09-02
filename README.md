@@ -2,7 +2,7 @@
 
 A purely JavaScript based Content Management System, for developers, web-designers and for allowing clients to make some changes to the end result.
 
-Give it a try by creating an account, downloading and running it straight from the file system. Just make sure you use a modern browser such as Chrome.
+Give it a try by creating an account (TODO: link here once website is up), downloading and running it straight from the file system. Just make sure you use a modern browser such as Chrome.
 
 ## The Main Concepts
 
@@ -49,3 +49,10 @@ If you prefer to have your code lodged in your environment please have a look at
 We do not offer data hosting, but there are components in the community repository for this. Such as AgnosticRedis4U and AgnosticRedis4UForm, that allow your data to be seamlessly hosted on http://redis4you.com/ under they're policies (we are not associated with redis4you in any form, this is just an example). 
 
 There are also components available on the community repository to help storing your data in your own environment, such as the AgnosticForm Component.
+
+## The History
+
+This project started because we couldn't find a CMS that had front-end developers as the first-class citizens. So that they could reuse they're code easily, make changes quickly, and empower users to edit they're content.
+Some CMSs have been used for similar purposes, but some where created with bloggers in mind, others business users, or server-side developers... And JavaScript is the most widely used language in the world! With a enormously bigger percentage of front-end developers than server-side... So why noone ever attempted this... We came to the conclusion that the only reason was storage. CMSs usually have a premise, they must have access to a Database, in fact they usually heavily rely on the Database, sometimes even to keep logic! 
+Take away that premise and voilà, you can have all your CMS logic on the client-side, which a front-end developer can understand.
+So, to achieve this, agnosticCMS relies on a REST service that can be written on any server-side language (we considered Web Storage and File API). All the REST API does is store data. It doesn't have any rules, in fact it doesn't even care about the data structure as it creates tables dynamically. So, developers only need to  find or write a simple implementation that fullfils the API contract on CRUD operations (TODO: link here), download the full blown agnostic-webservice ready to run (database and web-container embedded, and hey, it's just Storage! you don't need to know the language it's written on), or choose to use our cloud storage (default) and they are ready to go. The CMS is used straight from the file system and should grow into running everywhere (this initial version is for desktops) as it is based on standard web technologies with responsive techniques (that haven't been tested or adjusted yet).
