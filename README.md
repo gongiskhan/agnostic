@@ -2,7 +2,7 @@
 
 A purely JavaScript based Content Management System, for developers, web-designers and for allowing clients to make some changes to the end result.
 
-Give it a try by downloading it and running straight from the file system. Just make sure you use a modern browser such as Chrome.
+Give it a try by creating an account, downloading and running it straight from the file system. Just make sure you use a modern browser such as Chrome.
 
 ## The Main Concepts
 
